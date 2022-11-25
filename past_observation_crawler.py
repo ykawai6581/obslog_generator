@@ -152,7 +152,7 @@ def find_weather_and_comments(target, observations_df, targets_df, obsdate, star
                         'flats':1,
                         'lightcurve':1,
                         'quicklook':1,
-                        'comments': comments,
+                        'comments': f'Ag with CCD{ag}. {comments}',
                     }
                     #print(obsdata)
                     print('_____________________________________________\n')

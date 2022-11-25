@@ -5,12 +5,12 @@ usage: python obslog_generator.py [-h] --obsdate=int --obj=str --jd --bypass
 
 examples:
 
-***to generate obslog for a specific date (eg. Nov 21, 2022)***
+**to generate obslog for a specific date (eg. Nov 21, 2022)**
 
 	python obslog_generator.py --obsdate=221121
 
 
-***to quickly generate obslog for a specific date***
+**to quickly generate obslog for a specific date**
 
 	python obslog_generator.py --obsdate=221121 --bypass
 
@@ -19,18 +19,16 @@ examples:
 	weather information and comments
 
 
-***to generate obslog for a specific target (eg. KELT-9)***
+**to generate obslog for a specific target (eg. KELT-9)**
 
 	python obslog_generator.py --obj="KELT-9"
 	
 	* variations of names (eg: TOI0XXXX and TOI-XXXX) are treated 
-	equally for most cases.
-        planet identifiers (eg: -b, b, .01, .1 etc.) are not necessary 
-	because it is difficult to account for the inconsistencies and 
-	query may return empty results. case insensitive.',default='all'
+	equally for most cases. planet identifiers (eg: -b, b, .01, .1 etc.) 
+	are not necessary because it is difficult to account for the 
+	inconsistencies and query may return empty results. case insensitive.
 
-
-*** to generate obslog for a specific target on a specific date ***
+**to generate obslog for a specific target on a specific date**
 
 	python obslog_generator.py --obj="KELT-9" --obsdate=221121
 

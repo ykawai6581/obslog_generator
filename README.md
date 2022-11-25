@@ -10,7 +10,7 @@ examples:
 	python obslog_generator.py --obsdate=221121
 
 
-*** to quickly generate obslog for a specific date ***
+***to quickly generate obslog for a specific date***
 
 	python obslog_generator.py --obsdate=221121 --bypass
 

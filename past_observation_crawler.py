@@ -50,15 +50,15 @@ def adjust_string(str):
 
 def deg_to_dms(deg):
     d = int(deg)
-    m = np.abs(int((deg - d) * 60))
-    s = np.abs(np.round((((deg - d) * 60) - m) * 60, decimals=2))
-    return f'{d}:{m}:{s}'
+    m = int((deg - d) * 60)
+    s = np.round((((deg - d) * 60) - m) * 60, decimals=2)
+    return f'{d}:{np.abs(m)}:{np.abs(s)}'
 
 def deg_to_hms(deg):
     d = int(deg/15)
-    m = np.abs(int((deg/15 - d) * 60))
-    s = np.abs(np.round((((deg/15 - d) * 60) - m) * 60, decimals=2))
-    return f'{d}:{m}:{s}'
+    m = int((deg/15 - d) * 60)
+    s = np.round((((deg/15 - d) * 60) - m) * 60, decimals=2)
+    return f'{d}:{np.abs(m)}:{np.abs(s)}'
 
 def find_obsdates(target, observations_df, targets_df):
     observations_df = replace_header(observations_df)

@@ -2,7 +2,7 @@
 
 ## usage: python obslog_generator.py [-h] --obsdate=int --obj=str --jd --bypass
 
-### 1: to generate obslog for a specific date (eg. Nov 19, 2022)
+### 1: to generate obslog for a specific date and register on wiki (eg. Nov 19, 2022)
 
 	python obslog_generator.py --obsdate=221119
 	
@@ -36,8 +36,32 @@ for observations unregistered on wiki, something like this will come up.
 	
 simply follow the prompt and enter the required information to complete the registration.
 
+### 2: to generate obslog for a specific target (eg. KELT-19)**
 
-### 2: to quickly generate obslog for a specific date
+	python obslog_generator.py --obj="KELT-19"
+	
+	* variations of names (eg: TOI0XXXX and TOI-XXXX) are treated 
+	equally for most cases. planet identifiers (eg: -b, b, .01, .1 etc.) 
+	are not necessary because it is difficult to account for the 
+	inconsistencies and query may return empty results. case insensitive.
+	
+this will search the MuSCAT2 wiki for all observations previously conducted for the specific object. it will return something like this.
+
+	_____________________________________________
+	2 observation(s) for KELT-19 are found on: (yymmdd)
+
+	['181129', '200201']
+
+	If no obslogs are returned with the above dates, this may be due to the observation date wrongly entered on MuSCAT2 wiki.           
+	eg: Observations past midnight are registered with the date before midnight.           
+	In that case, obslog can be found on the next day. [ie: /obs_log_formatter.py --obsdate=221114 -> 221115]
+	_____________________________________________
+	Download all [y/N]: n
+	Obsdate(s) to download in yymmdd [int or list(int)]: 181129
+	
+you can either download obslog for all observations or choose a specific date.
+
+### 3: to quickly generate obslog for a specific date
 
 	python obslog_generator.py --obsdate=221121 --bypass
 
@@ -52,20 +76,13 @@ so running this version of the command will be much quicker but at the expense o
 	Comments:
 	_________________________________________________
 
-### 3: to generate obslog for a specific target (eg. KELT-9)**
+### 4: to generate obslog for a specific target on a specific date**
 
-	python obslog_generator.py --obj="KELT-9"
-	
-	* variations of names (eg: TOI0XXXX and TOI-XXXX) are treated 
-	equally for most cases. planet identifiers (eg: -b, b, .01, .1 etc.) 
-	are not necessary because it is difficult to account for the 
-	inconsistencies and query may return empty results. case insensitive.
+	python obslog_generator.py --obj="KELT-19" --obsdate=181129
 
-**to generate obslog for a specific target on a specific date**
+same thing as #3, but this is quicker if you know what date the observation was on.
 
-	python obslog_generator.py --obj="KELT-9" --obsdate=221121
-
-arguments:
+**arguments:
 
   -h, --help              : show this help message and exit
 
@@ -79,8 +96,7 @@ arguments:
 			    quickly checking tonight's obslog
 
 notes:
-- this script downloads and prints MuSCAT2 observation log for a specific obsdate or target. 
-metadata (obj_name, obstime, exp, focus) are taken from obslog and other variables (weather and comments) are taken from MuSCAT2 wiki.
+metadata (obj_name, obstime, exp, focus) are taken from obslog, weather and comments are taken from MuSCAT2 wiki.<br/>
 
 - whenever a new observation (observation not found on wiki) is loaded, the script will prompt users to register the obslog to the wiki. this is easily achieved by simply following the command line, without the need to access the webpage. the console output can be also copied for end of night reports. (kill two birds with one stone!)
 

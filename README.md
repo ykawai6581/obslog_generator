@@ -2,23 +2,23 @@
 
 ## usage: python obslog_generator.py [-h] --obsdate=int --obj=str --jd --bypass
 
-### 1: to generate obslog for a specific date and register on wiki (eg. Nov 19, 2022)
+### 1: to generate obslog for a specific date and register on wiki (eg. Dec 10, 2022)
 
-	python obslog_generator.py --obsdate=221119
+	python obslog_generator.py --obsdate=221210
 	
 example output will look like this.
 
 	_________________________________________________
-	TOI05543.01
-	Obs: 22:17 - 23:02 UT
-	Exp: 15.0, 15.0, 15.0, 10.0
-	Focus:  662961.0
-	Weather: Humid
-	Humidity: 61.4% (max), 32.7% (min)
-	Comments: It's hard to keep track of the observation due to ds9 problems (lag, closing from time to time, etc.). In order to have better comparison stars, we moved the field (offset 150 in RA). We had to stop the observation at 23:00 UT due to a humidity
+	TOI04659.01
+	Obs: 21:34 - 01:48 UT
+	Exp: 15.0, 20.0, [15.0], 20.0
+	Focus: On focus, 660841.0
+	Weather: Humid, Cloudy
+	Humidity: 70.9% (max), 54.1% (min)
+	Comments: The data is useless due to cloudy weather.
 
-	Altitude plot: https://tinyurl.com/2e4z3ea7
-	Humidity plot: https://tinyurl.com/2gqx2wm4
+	Altitude plot: https://tinyurl.com/2nw3ztn6
+	Humidity plot: https://tinyurl.com/2f2evscw
 	_________________________________________________
 
 altitude plots and humidity plots are retrieved from TTF and STELLA respectively. following each link, you should find something like this.
@@ -29,12 +29,28 @@ for observations unregistered on wiki, something like this will come up.
 
 	____NEW OBSERVATION______________________________
 
-	The following observation of TOI05933.01 has not been recorded on wiki yet.
+	The following observation of TOI04659.01 has not been recorded on wiki yet.
 
-	Register TOI05933.01's observation on November 12, 2022 to wiki [y/N]: 
+	Register TOI04659.01's observation on December 10, 2022 to wiki [y/N]: y
 	_________________________________________________
 	
-simply follow the prompt and enter the required information to complete the registration.
+simply follow the prompt and enter the required information to complete the registration. 
+
+	Weather: Humid, Cloudy
+	CCD for ag [0|1|2|3]: 2
+	Focus [0:in focus|1:on focus|2:slightly defocused|3:defocused|4:heavily defocused]: 1
+	Comments: The data is useless due to cloudy weather.
+	Observers: Yugo
+	_________________________________________________
+
+	Registering... (takes about 10-15 seconds)
+	_________________________________________________
+
+	Registration complete! (TOI04659.01, December 10, 2022)
+
+	Check at http://research.iac.es/proyecto/muscat/stars/view/990
+	
+	
 
 ### 2: to generate obslog for a specific target (eg. KELT-19)**
 

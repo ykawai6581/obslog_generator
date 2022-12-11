@@ -2,9 +2,7 @@
 
 ## usage: python obslog_generator.py [-h] --obsdate=int --obj=str --jd --bypass
 
-examples:
-
-**to generate obslog for a specific date (eg. Nov 19, 2022)**
+### 1: to generate obslog for a specific date (eg. Nov 19, 2022)
 
 	python obslog_generator.py --obsdate=221119
 	

@@ -73,7 +73,7 @@ altitude plots and humidity plots are retrieved from TTF and STELLA respectively
 
 ![altitude and humidity plots](/img/sample_altitude_humidity_plots.png)
 
-### 2: to generate obslog for a specific target (eg. KELT-19)**
+### 2: to generate obslog for a specific target (eg. KELT-19)
 
 	python obslog_generator.py --obj="KELT-19"
 	
@@ -103,6 +103,7 @@ you can either download obslog for all observations or choose a specific date.
 	python obslog_generator.py --obsdate=221121 --bypass
 
 this will bypass the login to MuSCAT2 wiki, which can be slow sometimes. (just retrieving the obslog is much quicker) <br/> 
+this might be useful when checking the obstimes, focus etc, during observations. <br/>
 so running this version of the command will be much quicker but at the expense of weather information and comments. example output looks like this.
 
 	_________________________________________________
@@ -112,12 +113,6 @@ so running this version of the command will be much quicker but at the expense o
 	Focus:  662961.0
 	Comments:
 	_________________________________________________
-
-### 4: to generate obslog for a specific target on a specific date**
-
-	python obslog_generator.py --obj="KELT-19" --obsdate=181129
-
-same thing as #2, but this is quicker if you know what date the observation was on.
 
 ### arguments:
 

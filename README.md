@@ -10,6 +10,16 @@ examples:
 	python obslog_generator.py --obsdate=221121
 
 
+for observations unregistered on wiki, follow the prompt and enter the required information to complete the registration.
+
+	____NEW OBSERVATION______________________________
+
+	The following observation of TOI05933.01 has not been recorded on wiki yet.
+
+	Register TOI05933.01's observation on November 12, 2022 to wiki [y/N]: 
+	_________________________________________________
+
+
 **to quickly generate obslog for a specific date**
 
 	python obslog_generator.py --obsdate=221121 --bypass

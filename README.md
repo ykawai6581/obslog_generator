@@ -50,7 +50,11 @@ simply follow the prompt and enter the required information to complete the regi
 
 	Check at http://research.iac.es/proyecto/muscat/stars/view/990
 	
+registration can be checked by following the generated link.
+	
 ![registration](/img/registration_demo.png)
+
+the console output can be pasted directly to end of observation emails.
 
 ### 2: to generate obslog for a specific target (eg. KELT-19)**
 
@@ -96,7 +100,7 @@ so running this version of the command will be much quicker but at the expense o
 
 	python obslog_generator.py --obj="KELT-19" --obsdate=181129
 
-same thing as #3, but this is quicker if you know what date the observation was on.
+same thing as #2, but this is quicker if you know what date the observation was on.
 
 ### arguments:
 
@@ -114,9 +118,7 @@ same thing as #3, but this is quicker if you know what date the observation was 
 ### notes:
 metadata (obj_name, obstime, exp, focus) are taken from obslog, weather and comments are taken from MuSCAT2 wiki.<br/>
 
-- whenever a new observation (observation not found on wiki) is loaded, the script will prompt users to register the obslog to the wiki. this is easily achieved by simply following the command line, without the need to access the webpage. the console output can be also copied for end of night reports. (kill two birds with one stone!)
-
-***requirements***
+### requirements
 numpy,pandas,requests,tqdm,astropy,pyshorteners
 
 Author: Yugo Kawai (The University of Tokyo)

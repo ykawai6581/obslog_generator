@@ -1,25 +1,58 @@
-# obslog_generator
-## obslog generator for MuSCAT2
+# obslog_generator for MuSCAT2
 
-usage: python obslog_generator.py [-h] --obsdate=int --obj=str --jd --bypass
+## usage: python obslog_generator.py [-h] --obsdate=int --obj=str --jd --bypass
 
-examples:
+### 1: to generate obslog for a specific date (eg. Nov 19, 2022)
 
-**to generate obslog for a specific date (eg. Nov 21, 2022)**
+	python obslog_generator.py --obsdate=221119
+	
+example output will look like this.
 
-	python obslog_generator.py --obsdate=221121
+	_________________________________________________
+	TOI05543.01
+	Obs: 22:17 - 23:02 UT
+	Exp: 15.0, 15.0, 15.0, 10.0
+	Focus:  662961.0
+	Weather: Humid
+	Humidity: 61.4% (max), 32.7% (min)
+	Comments: It's hard to keep track of the observation due to ds9 problems (lag, closing from time to time, etc.). In order to have better comparison stars, we moved the field (offset 150 in RA). We had to stop the observation at 23:00 UT due to a humidity
+
+	Altitude plot: https://tinyurl.com/2e4z3ea7
+	Humidity plot: https://tinyurl.com/2gqx2wm4
+	_________________________________________________
+
+altitude plots and humidity plots are retrieved from TTF and STELLA respectively. following each link, you should find something like this.
+
+![altitude and humidity plots](/sample_altitude_humidity_plots.png)
+
+for observations unregistered on wiki, something like this will come up.
+
+	____NEW OBSERVATION______________________________
+
+	The following observation of TOI05933.01 has not been recorded on wiki yet.
+
+	Register TOI05933.01's observation on November 12, 2022 to wiki [y/N]: 
+	_________________________________________________
+	
+simply follow the prompt and enter the required information to complete the registration.
 
 
-**to quickly generate obslog for a specific date**
+### 2: to quickly generate obslog for a specific date
 
 	python obslog_generator.py --obsdate=221121 --bypass
 
-	* this will bypass the post request to the wiki, 
-	so the operation will be much quicker at the expense of 
-	weather information and comments
+this will bypass the login to MuSCAT2 wiki, which can be slow sometimes. (just retrieving the obslog is much quicker) <br/> 
+so running this version of the command will be much quicker but at the expense of weather information and comments. example output looks like this.
 
+	_________________________________________________
+	TOI05543.01
+	Obs: 22:17 - 23:02 UT
+	Exp: 15.0, 15.0, 15.0, 10.0
+	Focus:  662961.0
+	Comments:
+	_________________________________________________
 
-**to generate obslog for a specific target (eg. KELT-9)**
+### 3: to generate obslog for a specific target (eg. KELT-9)**
 
 	python obslog_generator.py --obj="KELT-9"
 	

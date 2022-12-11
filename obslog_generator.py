@@ -292,8 +292,8 @@ def print_obslog(obsdate, obsdate_weather, comment, ip):
                 humidity_df = pd.DataFrame([row for row in humidity_reader])
                 try:
                     humidity_df[1] = humidity_df[1].astype(float)
-                    max_humidity = f'Max@{np.round(humidity_df[1].max(),decimals=1)}%,'
-                    min_humidity = f'Min@{np.round(humidity_df[1].min(),decimals=1)}%'
+                    max_humidity = f'{np.round(humidity_df[1].max(),decimals=1)}% (max),'
+                    min_humidity = f'Min@{np.round(humidity_df[1].min(),decimals=1)}% (min)'
                 except KeyError:
                     max_humidity = "Observation too short for archival data"
                     min_humidity = ""

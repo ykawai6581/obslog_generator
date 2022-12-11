@@ -52,7 +52,7 @@ metadata (obj_name, obstime, exp, focus) are taken from obslog and other variabl
 - whenever a new observation (observation not found on wiki) is loaded, the script will prompt users to register the obslog to the wiki. this is easily achieved by simply following the command line, without the need to access the webpage. the console output can be also copied for end of night reports. (kill two birds with one stone!)
 
 ***requirements***
-numpy,pandas,requests,tqdm
+numpy,pandas,requests,tqdm,astropy,pyshorteners
 
 Author: Yugo Kawai (The University of Tokyo)
 (Email: yugo6581 @ g.ecc.u-tokyo.ac.jp)

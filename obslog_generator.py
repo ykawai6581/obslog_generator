@@ -8,8 +8,10 @@ import numpy as np
 import os
 import pandas as pd
 from past_observation_crawler import find_obsdates, find_weather_and_comments
+import pyshorteners
 import requests
 import sys
+import time
 import tqdm
 import urllib
 
@@ -37,6 +39,7 @@ try:
     with open(credentials, 'r') as openfile:
         payload = json.load(openfile)
 except FileNotFoundError:
+    print("\n***you can also provide a cred.json file under the same directory bypass login***")
     username = input('username: ')
     password = getpass.getpass(prompt='password: ')
     payload = {"username": username, "password": password}
@@ -52,10 +55,16 @@ except FileNotFoundError:
 if not args.bypass:
     try:
         with requests.Session() as s:
-            print('_____________________________________________\n')
+            print('_________________________________________________\n')
             print('Authenticating... (takes about 10-15 seconds)')
-            print('_____________________________________________')
+            print('_________________________________________________')
+            time_start = time.time()
             p = s.post('http://research.iac.es/proyecto/muscat/users/login', data=payload)
+            time_end = time.time()
+            elapsed = time_end - time_start
+            if elapsed < 2:
+                print("\nlogin failed: wrong username/password\n")
+                sys.exit(1)
             # print the html returned or something more intelligent to see if it's a successful login page.
             obs_path = 'http://research.iac.es/proyecto/muscat/observations/export'
             targets_path = 'http://research.iac.es/proyecto/muscat/stars/export'
@@ -227,6 +236,9 @@ def print_obslog(obsdate, obsdate_weather, comment, ip):
         if past_midnight(int(obslog[3].iloc[-1][0:5][:2])):
             end_time += timedelta(days=1)
 
+        humidity_path = f'http://stella-archive.aip.de/stella/status/detail-text.php?typ=2&from={start_time.strftime("%d.%m.%Y %T")}&until={end_time.strftime("%d.%m.%Y %T")}&onescale=0&minmax=0'
+        humidity_plot = f'http://stella-archive.aip.de/stella/status/getdetail{humidity_path[54:]}'
+
         exptimes_list = [] #list of tuples containing (exptime, change_time) for all exposures
         exp_change_time_all_ccd = [] # cumulative list of all ccds of times when exposure time has changed
 
@@ -234,9 +246,9 @@ def print_obslog(obsdate, obsdate_weather, comment, ip):
         focus = "" #create empty string which can be overwritten in when generating obslog for emails and registeration to wiki
         ag = None #create empty variable which can be overwritten in when generating obslog for emails and registeration to wiki
 
-        if args.obsdate is not None and not args.bypass: #if a specific date is returned and connected to wiki, obtain info from wiki
-            obsdate_weather, comment , focus , ag = find_weather_and_comments(item,observations_df,targets_df,obsdate,start_time,end_time,payload)
-               
+        if not args.bypass: #if a specific date is returned and connected to wiki, obtain info from wiki
+            obsdate_weather, comment , focus , ag, altitude_plot = find_weather_and_comments(item,observations_df,targets_df,obsdate,start_time,end_time,obslog[2][0],obslog[2].iloc[-1],payload)
+        #args.obsdate is not None and 
         for ccd in ccds:
             df = pd.DataFrame(ccd)
             obslog = df[df[1] == item].reset_index()
@@ -271,8 +283,27 @@ def print_obslog(obsdate, obsdate_weather, comment, ip):
                 (exp_df.iloc[0][ag]) = f'[{exp_df.iloc[0][0]}]'
             exp_df = ', '.join((exp_df.iloc[0]))
 
+        if not args.bypass:
+            with requests.Session() as s:
+                r = s.get(humidity_path)
+                humidity = r.text#.encode('utf-8')
+                humidity_reader = csv.reader(io.StringIO(humidity), delimiter=',',quotechar='"',
+                                quoting=csv.QUOTE_ALL, skipinitialspace=True)
+                humidity_df = pd.DataFrame([row for row in humidity_reader])
+                try:
+                    humidity_df[1] = humidity_df[1].astype(float)
+                    max_humidity = f'Max@{np.round(humidity_df[1].max(),decimals=1)}%,'
+                    min_humidity = f'Min@{np.round(humidity_df[1].min(),decimals=1)}%'
+                except KeyError:
+                    max_humidity = "Observation too short for archival data"
+                    min_humidity = ""
+
+        url_shortener = pyshorteners.Shortener()
+        altitude_plot = url_shortener.tinyurl.short(altitude_plot)
+        humidity_plot = url_shortener.tinyurl.short(humidity_plot)
+
         #print output
-        print('__________________________')
+        print('_________________________________________________')
         print(item)
         print(obstimes)   
         print(f'Exp: {exp_df}')
@@ -283,11 +314,14 @@ def print_obslog(obsdate, obsdate_weather, comment, ip):
             print(f'Focus: {focus} {focus_log}')
         if not args.bypass:
             print(f'Weather: {obsdate_weather}')
-            print(f'Comments: {comment}')
+            print(f'Humidity: {max_humidity} {min_humidity}')
+            print(f'Comments: {comment}\n')
+            print(f'Altitude plot: {altitude_plot}')
+            print(f'Humidity plot: {humidity_plot}')
+            #time.sleep(2)
         else:
             print('Comments:')
-        #time.sleep(2)
-    print('__________________________')
+    print('_________________________________________________')
     print('\nNote:')
     if len(active_ccds) != 4:
         print(f'\n**MISSING CCD**Exposure times are for CCDs {active_ccds} respectively.\n')

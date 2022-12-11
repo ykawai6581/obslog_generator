@@ -298,9 +298,9 @@ def print_obslog(obsdate, obsdate_weather, comment, ip):
                     max_humidity = "Observation too short for archival data"
                     min_humidity = ""
 
-        url_shortener = pyshorteners.Shortener()
-        altitude_plot = url_shortener.tinyurl.short(altitude_plot)
-        humidity_plot = url_shortener.tinyurl.short(humidity_plot)
+                url_shortener = pyshorteners.Shortener()
+                altitude_plot = url_shortener.tinyurl.short(altitude_plot)
+                humidity_plot = url_shortener.tinyurl.short(humidity_plot)
 
         #print output
         print('_________________________________________________')

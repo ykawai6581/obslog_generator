@@ -132,10 +132,10 @@ def find_weather_and_comments(target, observations_df, targets_df, obsdate, star
     except IndexError:
         #ここでtarget観測を登録するか聞く（各天体についてのループの中でここに辿り着いてるから、ここでinputを促せばそのまま登録できる？）
         date_for_view = datetime(obs(obsdate)['year'],obs(obsdate)['month'],obs(obsdate)['day']).strftime('%B %d, %Y')
-        print('\n____NEW OBSERVATION__________________________')
+        print('\n____NEW OBSERVATION______________________________')
         print(f'\nThe following observation of {target} has not been recorded on wiki yet.\n')
         choice = input(f'Register {target}\'s observation on {date_for_view} to wiki [y/N]: ').lower()
-        print('_____________________________________________\n')
+        print('_________________________________________________\n')
         if choice in ['y', 'ye', 'yes']:
             try:
                 with requests.Session() as s:
@@ -170,9 +170,9 @@ def find_weather_and_comments(target, observations_df, targets_df, obsdate, star
                         'comments': f'Ag with CCD{ag}. {comments}',
                     }
                     #print(obsdata)
-                    print('_____________________________________________\n')
+                    print('_________________________________________________\n')
                     print('Registering... (takes about 10-15 seconds)')
-                    print('_____________________________________________')
+                    print('_________________________________________________')
                     p = s.post('http://research.iac.es/proyecto/muscat/users/login', data=payload)
                     #print(p.status_code)
                     registration = s.post('http://research.iac.es/proyecto/muscat/observations/add', data=obsdata)

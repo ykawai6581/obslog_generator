@@ -1,7 +1,6 @@
-# obslog_generator
-## obslog generator for MuSCAT2
+# obslog_generator for MuSCAT2
 
-usage: python obslog_generator.py [-h] --obsdate=int --obj=str --jd --bypass
+##usage: python obslog_generator.py [-h] --obsdate=int --obj=str --jd --bypass
 
 examples:
 

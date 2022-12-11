@@ -21,6 +21,9 @@ example output will look like this.
 	Humidity plot: https://tinyurl.com/2gqx2wm4
 	_________________________________________________
 
+altitude plots and humidity plots are retrieved from TTF and STELLA respectively. following the link, you should find something like this.
+
+![altitude and humidity plots](/sample_altitude_humidity_plots.png)
 
 for observations unregistered on wiki, something like this will come up.
 
@@ -34,13 +37,14 @@ for observations unregistered on wiki, something like this will come up.
 simply follow the prompt and enter the required information to complete the registration.
 
 
-**to quickly generate obslog for a specific date**
+### 2: to quickly generate obslog for a specific date
 
 	python obslog_generator.py --obsdate=221121 --bypass
 
-	* this will bypass the post request to the wiki, 
-	so the operation will be much quicker at the expense of 
-	weather information and comments
+this will bypass the login to MuSCAT2 wiki, which can be slow sometimes. (just retrieving the obslog is much quicker)
+so running this version of the command will be much quicker but at the expense of weather information and comments. example output looks like this.
+
+
 
 
 **to generate obslog for a specific target (eg. KELT-9)**

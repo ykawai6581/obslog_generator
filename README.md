@@ -1,5 +1,7 @@
 # obslog_generator for MuSCAT2
 
+![demo](/img/obslog_generator_demo.gif)
+
 ## usage: python obslog_generator.py [-h] --obsdate=int --obj=str --jd --bypass
 
 ### 1: to generate obslog for a specific date and register on wiki (eg. Dec 10, 2022)

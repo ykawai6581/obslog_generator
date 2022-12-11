@@ -50,7 +50,7 @@ simply follow the prompt and enter the required information to complete the regi
 
 	Check at http://research.iac.es/proyecto/muscat/stars/view/990
 	
-	
+![registration](/registration_demo.png)
 
 ### 2: to generate obslog for a specific target (eg. KELT-19)**
 

@@ -1,12 +1,13 @@
 #import csv
 from datetime import datetime, timedelta
 import json
-#import numpy as np
+import numpy as np
 import os
 #import pandas as pd
 import requests
 import sys
 import warnings
+from astropy.time import Time
 
 warnings.filterwarnings("ignore")
 
@@ -46,6 +47,18 @@ def adjust_string(str):
     if len(str) == 0:
         str = "None"
     return str
+
+def deg_to_dms(deg):
+    d = int(deg)
+    m = int((deg - d) * 60)
+    s = np.round((((deg - d) * 60) - m) * 60, decimals=2)
+    return f'{d}:{m}:{s}'
+
+def deg_to_hms(deg):
+    d = int(deg/15)
+    m = int((deg/15 - d) * 60)
+    s = np.round((((deg/15 - d) * 60) - m) * 60, decimals=2)
+    return f'{d}:{m}:{s}'
 
 def find_obsdates(target, observations_df, targets_df):
     observations_df = replace_header(observations_df)
@@ -93,15 +106,22 @@ def find_obsdates(target, observations_df, targets_df):
             comments = ["" for x in dl_index]
     return obsdates, weather, comments
 
-def find_weather_and_comments(target, observations_df, targets_df, obsdate, start_time, end_time, payload):
+def find_weather_and_comments(target, observations_df, targets_df, obsdate, start_time, end_time, jd_start, jd_end, payload):
     observations_df = replace_header(observations_df)
     targets_df = replace_header(targets_df)
     targets_df['wiki_name'] = targets_df['name']
     targets_df['name'] = [adjust_name(s) for s in targets_df['name']]
     try:
         star_id = targets_df[targets_df['name'].str.contains(adjust_name(target))]['id'].iloc[0]
+        ra = float(targets_df[targets_df['name'].str.contains(adjust_name(target))]['RA'].iloc[0])
+        ra = deg_to_hms(ra)
+        dec = float(targets_df[targets_df['name'].str.contains(adjust_name(target))]['Decl'].iloc[0])
+        dec = deg_to_dms(dec)
+        jd = Time(start_time.strftime('%Y-%m-%d %T'),format='iso',out_subfmt='date_hm').jd
+        warning = " (THE GREEN SECTION INDICATES OBSERVATION TIME NOT TRANSIT TIME)"
+        altitude_plot = f'https://astro.swarthmore.edu/telescope/tess-secure/plot_airmass.cgi?observatory_string=28.3%3B-16.5097%3BAtlantic%2FCanary%3BMuSCAT2%201.52m%20at%20Teide%20Observatory%3BMuSCAT2%201.52m&observatory_latitude=28.3&observatory_longitude=-16.5097&target={target}{warning}&ra={ra}&dec={dec}&timezone=Atlantic/Canary&jd={jd}&jd_start={jd_start}&jd_end={jd_end}&use_utc=0&max_airmass=2.4'
     except IndexError:
-        return "","Target does not seem to be registered on wiki.", "", None
+        return "","Target does not seem to be registered on wiki.", "", None, "No link to altitude plot"
     
     past_observation = observations_df[observations_df['star_id'] == star_id]
     obsdates = list(past_observation['start_time'])
@@ -161,10 +181,10 @@ def find_weather_and_comments(target, observations_df, targets_df, obsdate, star
                     else:
                         print(f'\nRegistration complete! ({target}, {date_for_view})\n')
                         print(f'Check at http://research.iac.es/proyecto/muscat/stars/view/{star_id}\n')
-                    return weather, comments, focus, int(ag)
+                    return weather, comments, focus, int(ag), altitude_plot
             except requests.exceptions.ConnectionError:
                 print('Bad connection with the server. A simple retry should fix the issue. Make sure that you are connected to VPN.')
                 sys.exit(1)
         elif choice in ['n', 'no']:
-            return "","Observation does not seem to be registered on wiki yet.","", None
-    return weather, comments, "", None
+            return "","Observation does not seem to be registered on wiki yet.","", None, altitude_plot
+    return weather, comments, "", None, altitude_plot

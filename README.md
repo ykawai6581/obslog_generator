@@ -21,10 +21,6 @@ example output will look like this.
 	Humidity plot: https://tinyurl.com/2f2evscw
 	_________________________________________________
 
-altitude plots and humidity plots are retrieved from TTF and STELLA respectively. following each link, you should find something like this.
-
-![altitude and humidity plots](/img/sample_altitude_humidity_plots.png)
-
 for observations unregistered on wiki, something like this will come up.
 
 	____NEW OBSERVATION______________________________
@@ -55,6 +51,23 @@ registration can be checked by following the generated link.
 ![registration](/img/registration_demo.png)
 
 the console output can be pasted directly to end of observation emails.
+
+	_________________________________________________
+	TOI04659.01
+	Obs: 21:34 - 01:48 UT
+	Exp: 15.0, 20.0, [15.0], 20.0
+	Focus: On focus, 660841.0
+	Weather: Humid, Cloudy
+	Humidity: 70.9% (max), 54.1% (min)
+	Comments: The data is useless due to cloudy weather.
+
+	Altitude plot: https://tinyurl.com/2nw3ztn6
+	Humidity plot: https://tinyurl.com/2f2evscw
+	_________________________________________________
+
+altitude plots and humidity plots are retrieved from TTF and STELLA respectively. following each link, you should find something like this.
+
+![altitude and humidity plots](/img/sample_altitude_humidity_plots.png)
 
 ### 2: to generate obslog for a specific target (eg. KELT-19)**
 

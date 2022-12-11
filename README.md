@@ -23,7 +23,7 @@ example output will look like this.
 
 altitude plots and humidity plots are retrieved from TTF and STELLA respectively. following each link, you should find something like this.
 
-![altitude and humidity plots](/sample_altitude_humidity_plots.png)
+![altitude and humidity plots](/img/sample_altitude_humidity_plots.png)
 
 for observations unregistered on wiki, something like this will come up.
 
@@ -50,7 +50,7 @@ simply follow the prompt and enter the required information to complete the regi
 
 	Check at http://research.iac.es/proyecto/muscat/stars/view/990
 	
-![registration](/registration_demo.png)
+![registration](/img/registration_demo.png)
 
 ### 2: to generate obslog for a specific target (eg. KELT-19)**
 
@@ -98,7 +98,7 @@ so running this version of the command will be much quicker but at the expense o
 
 same thing as #3, but this is quicker if you know what date the observation was on.
 
-**arguments:
+### arguments:
 
   -h, --help              : show this help message and exit
 
@@ -111,7 +111,7 @@ same thing as #3, but this is quicker if you know what date the observation was 
   --bypass 		  : if provided, data download from wiki is bypassed. may be useful for 
 			    quickly checking tonight's obslog
 
-notes:
+### notes:
 metadata (obj_name, obstime, exp, focus) are taken from obslog, weather and comments are taken from MuSCAT2 wiki.<br/>
 
 - whenever a new observation (observation not found on wiki) is loaded, the script will prompt users to register the obslog to the wiki. this is easily achieved by simply following the command line, without the need to access the webpage. the console output can be also copied for end of night reports. (kill two birds with one stone!)
@@ -122,4 +122,4 @@ numpy,pandas,requests,tqdm,astropy,pyshorteners
 Author: Yugo Kawai (The University of Tokyo)
 (Email: yugo6581 @ g.ecc.u-tokyo.ac.jp)
 
-Last update: November 21, 2022
+Last update: Dec 12, 2022

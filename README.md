@@ -4,9 +4,9 @@
 
 examples:
 
-**to generate obslog for a specific date (eg. Nov 21, 2022)**
+**to generate obslog for a specific date (eg. Nov 19, 2022)**
 
-	python obslog_generator.py --obsdate=221121
+	python obslog_generator.py --obsdate=221119
 	
 example output will look like this.
 

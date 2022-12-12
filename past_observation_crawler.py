@@ -84,7 +84,7 @@ def find_obsdates(target, observations_df, targets_df):
 
     print('\nIf no obslogs are returned with the above dates, this may be due to the observation date wrongly entered on MuSCAT2 wiki.\
            \neg: Observations past midnight are registered with the date before midnight.\
-           \nIn that case, obslog can be found on the next day. [ie: /obs_log_formatter.py --obsdate=221114 -> 221115]')
+           \nIn that case, obslog can be found on the next day. [ie: /obslog_generator.py --obsdate=181129 -> 181130]')
     print('_____________________________________________')
     weather = list(past_observation['weather'])
     comments = list(past_observation['comments'])

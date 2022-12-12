@@ -6,7 +6,7 @@ automatically generate and register obslog on MuSCAT2 wiki
 
 ## usage: python obslog_generator.py [-h] --obsdate=int --obj=str --jd --bypass
 
-### 1: to generate obslog for a specific date and register on wiki (eg. Dec 10, 2022)
+### 1: generate obslog and register on wiki (eg. Dec 10, 2022)
 
 	python obslog_generator.py --obsdate=221210
 	
@@ -73,7 +73,7 @@ altitude plots and humidity plots are retrieved from TTF and STELLA respectively
 
 ![altitude and humidity plots](/img/sample_altitude_humidity_plots.png)
 
-### 2: to generate obslog for a specific target (eg. KELT-19)
+### 2: generate obslog for a specific object (eg. KELT-19)
 
 	python obslog_generator.py --obj="KELT-19"
 	
@@ -98,13 +98,12 @@ this will search the MuSCAT2 wiki for all observations previously conducted for 
 	
 you can either download obslog for all observations or choose a specific date.
 
-### 3: to quickly generate obslog for a specific date
+### 3: generate simplified obslog
 
 	python obslog_generator.py --obsdate=221121 --bypass
 
-this will bypass the login to MuSCAT2 wiki, which can be slow sometimes. (just retrieving the obslog is much quicker) <br/> 
-this might be useful when checking the obstimes, focus etc, during observations. <br/>
-so running this version of the command will be much quicker but at the expense of weather information and comments. example output looks like this.
+this will only retrieve obstimes, exptimes and focus from the obslog. <br/>
+this is much quicker because login to MuSCAT2 wiki is bypassed, which can be slow sometimes. <br/> this might be useful when checking obslog during observations. example output looks like this.
 
 	_________________________________________________
 	TOI05543.01

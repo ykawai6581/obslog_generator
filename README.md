@@ -6,6 +6,9 @@ automatically generate and register obslog on MuSCAT2 wiki
 
 ## usage: python obslog_generator.py [-h] --obsdate=int --obj=str --jd --bypass
 
+installation:
+	git clone https://github.com/ykawai6581/obslog_generator.git
+
 ### 1: generate obslog and register on wiki (eg. Dec 10, 2022)
 
 	python obslog_generator.py --obsdate=221210

@@ -1,6 +1,5 @@
-# obslog_generator for MuSCAT2
-
-automatically generate and register obslog on MuSCAT2 wiki
+# [MuSCAT2] obslog_generator
+obslog generation/registration tool for MuSCAT2
 
 ![demo](/img/obslog_generator_demo.gif)
 

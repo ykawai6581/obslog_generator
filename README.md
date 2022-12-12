@@ -135,7 +135,7 @@ this is much quicker because login to MuSCAT2 wiki is bypassed, which can be slo
 ### notes:
 metadata (obj_name, obstime, exp, focus) are taken from obslog, weather and comments are taken from MuSCAT2 wiki.<br/>
 
-### requirements
+### requirements:
 numpy,pandas,requests,tqdm,astropy,pyshorteners
 
 Author: Yugo Kawai (The University of Tokyo)

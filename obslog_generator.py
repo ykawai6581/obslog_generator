@@ -319,8 +319,7 @@ def print_obslog(obsdate, obsdate_weather, comment, ip):
             print(f'Altitude plot: {altitude_plot}')
             print(f'Humidity plot: {humidity_plot}')
             #time.sleep(2)
-        else:
-            print('Comments:')
+            
     print('_________________________________________________')
     print('\nNote:')
     if len(active_ccds) != 4:

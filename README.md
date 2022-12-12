@@ -90,7 +90,7 @@ altitude plots and humidity plots are retrieved from TTF and STELLA respectively
 	
 this will search the MuSCAT2 wiki for all observations previously conducted for the specific object. it will return something like this.
 
-	_____________________________________________
+	_________________________________________________
 	2 observation(s) for KELT-19 are found on: (yymmdd)
 
 	['181129', '200201']
@@ -98,7 +98,7 @@ this will search the MuSCAT2 wiki for all observations previously conducted for 
 	If no obslogs are returned with the above dates, this may be due to the observation date wrongly entered on MuSCAT2 wiki.           
 	eg: Observations past midnight are registered with the date before midnight.           
 	In that case, obslog can be found on the next day. [ie: /obslog_generator.py --obsdate=181129 -> 181130]
-	_____________________________________________
+	_________________________________________________
 	Download all [y/N]: n
 	Obsdate(s) to download in yymmdd [int or list(int)]: 181129
 	

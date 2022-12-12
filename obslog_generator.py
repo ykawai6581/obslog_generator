@@ -33,22 +33,17 @@ if args.obsdate is None and args.obj == 'all':
 
 dirname = os.path.dirname(__file__)
 credentials = os.path.join(dirname, 'cred.json')
-server = os.path.join(dirname, 'ip.json')
 
 try: 
     with open(credentials, 'r') as openfile:
         payload = json.load(openfile)
 except FileNotFoundError:
-    print("\n***you can also provide a cred.json file under the same directory bypass login***")
+    print("\n***you can also provide a cred.json file to bypass login***")
     username = input('username: ')
     password = getpass.getpass(prompt='password: ')
     payload = {"username": username, "password": password}
 
-try:
-    with open(server, 'r') as openfile:
-        ip = json.load(openfile)
-except FileNotFoundError:
-    ip = {"shine": "161.72.192.46"}
+ip = {"shine": "161.72.192.46"}
 
 #print(args.connect)
 # Use 'with' to ensure the session context is closed after use.

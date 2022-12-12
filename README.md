@@ -1,8 +1,6 @@
 # [MuSCAT2] obslog_generator
 obslog generation/registration tool for MuSCAT2
 
-this is a test
-
 ![demo](/img/obslog_generator_demo.gif)
 
 installation:

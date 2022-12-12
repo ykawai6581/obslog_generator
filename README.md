@@ -97,7 +97,7 @@ this will search the MuSCAT2 wiki for all observations previously conducted for 
 
 	If no obslogs are returned with the above dates, this may be due to the observation date wrongly entered on MuSCAT2 wiki.           
 	eg: Observations past midnight are registered with the date before midnight.           
-	In that case, obslog can be found on the next day. [ie: /obs_log_formatter.py --obsdate=221114 -> 221115]
+	In that case, obslog can be found on the next day. [ie: /obslog_generator.py --obsdate=221114 -> 221115]
 	_____________________________________________
 	Download all [y/N]: n
 	Obsdate(s) to download in yymmdd [int or list(int)]: 181129

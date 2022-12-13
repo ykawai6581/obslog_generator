@@ -1,21 +1,25 @@
 import argparse
-from astropy.time import Time
 import csv
 from datetime import datetime, timedelta
 import getpass
 import io
 import json
-import numpy as np
 import os
-import pandas as pd
 from past_observation_crawler import find_obsdates, find_weather_and_comments, adjust_name, deg_to_dms, deg_to_hms
-import pyshorteners
-import requests
 import sys
 import time
-import tqdm
 import urllib
 import urllib3
+
+try:
+    from astropy.time import Time
+    import numpy as np
+    import pandas as pd
+    import pyshorteners
+    import requests
+    import tqdm
+except ModuleNotFoundError:
+    print("Some required modules are not installed.\n pip install -r requirements.txt\n Please run the above command and try again.")
 
 parser = argparse.ArgumentParser(description=\
 '## obslog formatter ver. 2022 Nov. 19 ##')

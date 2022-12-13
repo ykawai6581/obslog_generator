@@ -3,11 +3,11 @@ obslog generation/registration tool for MuSCAT2
 
 ![demo](/img/obslog_generator_demo.gif)
 
-installation:
+## installation:
 
 	git clone https://github.com/ykawai6581/obslog_generator.git
 
-usage: 
+## usage: 
 
 	python obslog_generator.py [-h] --obsdate=int --obj=str --jd --bypass
 
@@ -127,15 +127,18 @@ this is much quicker because login to MuSCAT2 wiki is bypassed, which can be slo
 
   --obsdate        	  : date of observation in yymmdd format
 
-  --obj			  : if given, only the log for that object will be returned.
+  --obj			  : if given, only the log for that object will be returned
 
   --jd 			  : if provided, will return time stamps in jd instead of ut
 
   --bypass 		  : if provided, data download from wiki is bypassed. may be useful for 
-			    quickly checking tonight's obslog
+			    quickly checking obslog during observation
 
 ### notes:
 metadata (obj_name, obstime, exp, focus) are taken from obslog, weather and comments are taken from MuSCAT2 wiki.<br/>
+if nothing about the weather is registered on wiki, archival data is retrieved from telescope.org/weather.php.<br/>
+
+ra and dec are retrieved from wiki in regular mode, and from exofop in bypass mode.
 
 ### requirements:
 numpy,pandas,requests,tqdm,astropy,pyshorteners

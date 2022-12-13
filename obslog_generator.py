@@ -319,7 +319,7 @@ def print_obslog(obsdate, obsdate_weather, comment, ip):
             print(f'Weather: {obsdate_weather}')
         print(f'Humidity: {max_humidity} {min_humidity}')
         if not args.bypass:
-            print(f'Comments: {comment}\n')
+            print(f'Comments: {comment}')
         print(f'\nAltitude plot: {altitude_plot}')
         print(f'Humidity plot: {humidity_plot}')
             #time.sleep(2)

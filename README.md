@@ -115,7 +115,6 @@ this is much quicker because login to MuSCAT2 wiki is bypassed, which can be slo
 	Obs: 22:17 - 23:02 UT
 	Exp: 15.0, 15.0, 15.0, 10.0
 	Focus:  662961.0
-	Comments:
 	_________________________________________________
 
 ### arguments:

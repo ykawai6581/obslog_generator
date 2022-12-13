@@ -35,14 +35,15 @@ if args.obsdate is None and args.obj == 'all':
 dirname = os.path.dirname(__file__)
 credentials = os.path.join(dirname, 'cred.json')
 
-try: 
-    with open(credentials, 'r') as openfile:
-        payload = json.load(openfile)
-except FileNotFoundError:
-    print("\n***you can also provide a cred.json file to bypass login***")
-    username = input('username: ')
-    password = getpass.getpass(prompt='password: ')
-    payload = {"username": username, "password": password}
+if not args.bypass:
+    try: 
+        with open(credentials, 'r') as openfile:
+            payload = json.load(openfile)
+    except FileNotFoundError:
+        print("\n***you can also provide a cred.json file to bypass login***")
+        username = input('username: ')
+        password = getpass.getpass(prompt='password: ')
+        payload = {"username": username, "password": password}
 
 ip = {"shine": "161.72.192.46"}
 

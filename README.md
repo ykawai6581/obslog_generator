@@ -105,16 +105,19 @@ you can either download obslog for all observations or choose a specific date.
 
 ### 3: generate simplified obslog
 
-	python obslog_generator.py --obsdate=221121 --bypass
+	python obslog_generator.py --obsdate=221211 --bypass
 
 this will only retrieve obstimes, exptimes and focus from the obslog. <br/>
 this is much quicker because login to MuSCAT2 wiki is bypassed, which can be slow sometimes. <br/> this might be useful when checking obslog during observations. example output looks like this.
-
 	_________________________________________________
-	TOI05543.01
-	Obs: 22:17 - 23:02 UT
-	Exp: 15.0, 15.0, 15.0, 10.0
-	Focus:  662961.0
+	TOI02742.01
+	Obs: 01:13 - 04:51 UT
+	Exp: 30.0, 15.0, 30.0, 30.0
+	Focus:  658021.0
+	Humidity: 66.6% (max), 33.8% (min)
+	
+	Altitude plot: https://tinyurl.com/2guzn357
+	Humidity plot: https://tinyurl.com/2zf5ygye
 	_________________________________________________
 
 ### arguments:

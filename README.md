@@ -109,6 +109,7 @@ you can either download obslog for all observations or choose a specific date.
 
 this will only retrieve obstimes, exptimes and focus from the obslog. <br/>
 this is much quicker because login to MuSCAT2 wiki is bypassed, which can be slow sometimes. <br/> this might be useful when checking obslog during observations. example output looks like this.
+
 	_________________________________________________
 	TOI02742.01
 	Obs: 01:13 - 04:51 UT

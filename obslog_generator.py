@@ -15,6 +15,7 @@ import sys
 import time
 import tqdm
 import urllib
+import urllib3
 
 parser = argparse.ArgumentParser(description=\
 '## obslog formatter ver. 2022 Nov. 19 ##')
@@ -89,8 +90,13 @@ else: #日付指定をしている場合(天体指定の有無に関わらず)we
 def shorten_url(url, url_shortener):
     try:
         url = url_shortener.tinyurl.short(url)
+    except requests.exceptions.ReadTimeout:
+        url = "Generation failed. Please try again"
+    except urllib3.exceptions.ReadTimeoutError:
+        url = "Generation failed. Please try again"
     except pyshorteners.exceptions.ShorteningErrorException:
         url = "Generation failed. Please try again"
+    return url
 
 #returns the observation date according to input
 def obs(obsdate):

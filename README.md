@@ -14,6 +14,15 @@ once that is done, cd into /obslog_generator and run
 
 to download the required modules, which include astropy, numpy, pandas, pyshorteners, requests and tqdm.
 
+additionally, you can prepare your own cred.json file under /obslog_generator so that you don't have to type in usernames and passwords everytime you try to login to MuSCAT2 wiki. in that case, your json file should look something like
+
+	#### **`cred.json`**
+	``` json
+	 {"username": ******,
+          "password": ******
+         }
+	```
+
 ## usage: 
 
 	python obslog_generator.py [-h] --obsdate=int --obj=str --jd --bypass

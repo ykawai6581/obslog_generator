@@ -236,7 +236,11 @@ def print_obslog(obsdate, obsdate_weather, comment, ip):
     for index, path in enumerate(tqdm.tqdm(paths, desc=f'\rDownloading obslog for observation on {date_for_mail}')):
         try:
             l  = np.array(pd.read_csv(path, encoding='UTF-8').reset_index())
-            ccds.append(l)
+            if len(l) == 0:
+                print(f'\r***No obslog is found for CCD {index} on {date_for_mail}***')
+                active_ccds.remove(index)
+            else:
+                ccds.append(l)
         except urllib.error.HTTPError:
             print(f'\r***No obslog is found for CCD {index} on {date_for_mail}***')
             error_count += 1
@@ -395,7 +399,7 @@ def print_obslog(obsdate, obsdate_weather, comment, ip):
             print(f'Focus: {focus} {focus_log}')
         if not args.bypass:
             if obsdate_weather == " ":
-                print(f'Weather: {obsdate_weather} ({weather_start} -> {weather_end})')
+                print(f'Weather: {obsdate_weather} ({weather_start} -> {weather_end} /from telescope.org)')
             else:
                 print(f'Weather: {weather_start} -> {weather_end}')
         print(f'Humidity: {max_humidity} {min_humidity}')

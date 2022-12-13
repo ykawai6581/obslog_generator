@@ -19,7 +19,9 @@ try:
     import requests
     import tqdm
 except ModuleNotFoundError:
-    print("Some required modules are not installed.\n\n    pip install -r requirements.txt\n\n Please run the above command and try again.")
+    print('_________________________________________________\n')
+    print("Some required modules are not installed.\n\n    pip install -r requirements.txt\n\nPlease run the above command and try again.")
+    print('_________________________________________________\n')
     sys.exit(1)
 
 parser = argparse.ArgumentParser(description=\

@@ -11,7 +11,9 @@ try:
     from astropy.time import Time
     import requests
 except ModuleNotFoundError:
-    print("Some required modules are not installed.\n\n    pip install -r requirements.txt\n\n Please run the above command and try again.")
+    print('_________________________________________________\n')
+    print("Some required modules are not installed.\n\n    pip install -r requirements.txt\n\nPlease run the above command and try again.")
+    print('_________________________________________________\n')
     sys.exit(1)
 
 warnings.filterwarnings("ignore")

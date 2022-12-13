@@ -7,9 +7,18 @@ obslog generation/registration tool for MuSCAT2
 
 	git clone https://github.com/ykawai6581/obslog_generator.git
 
+you can run the above command or also choose to download the zip file.<br/>
+once that is done, cd into /obslog_generator and run
+
+	pip install -r requirements.txt
+
+to download the required modules, which include astropy, numpy, pandas, pyshorteners, requests and tqdm.
+
 ## usage: 
 
 	python obslog_generator.py [-h] --obsdate=int --obj=str --jd --bypass
+
+run the above command with arguments that fit your needs! below are some examples.
 
 ### 1: generate obslog and register on wiki (eg. Dec 10, 2022)
 

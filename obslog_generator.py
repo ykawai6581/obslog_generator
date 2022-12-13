@@ -299,6 +299,7 @@ def print_obslog(obsdate, obsdate_weather, comment, ip):
                 jd = Time(start_time.strftime('%Y-%m-%d %T'),format='iso',out_subfmt='date_hm').jd
                 warning = " (THE GREEN SECTION INDICATES OBSERVATION TIME NOT TRANSIT TIME)"
                 altitude_plot = f'https://astro.swarthmore.edu/telescope/tess-secure/plot_airmass.cgi?observatory_string=28.3%3B-16.5097%3BAtlantic%2FCanary%3BMuSCAT2%201.52m%20at%20Teide%20Observatory%3BMuSCAT2%201.52m&observatory_latitude=28.3&observatory_longitude=-16.5097&target={item}{warning}&ra={ra}&dec={dec}&timezone=Atlantic/Canary&jd={jd}&jd_start={obslog[2][0]}&jd_end={obslog[2].iloc[-1]}&use_utc=0&max_airmass=2.4'
+                altitude_plot = url_shortener.tinyurl.short(altitude_plot)
 
         #print output
         print('_________________________________________________')

@@ -362,15 +362,14 @@ def print_obslog(obsdate, obsdate_weather, comment, ip):
 
             if not args.bypass:
                 altitude_plot = shorten_url(altitude_plot, url_shortener)
+                if len(obsdate_weather) == 0:
+                    unix_start_time = datetime.timestamp(start_time)
+                    unix_end_time = datetime.timestamp(end_time)
+                    weather_start = s.get(f'https://www.telescope.org/weathergen/weather-icon.php?time={unix_start_time}')
+                    weather_end   = s.get(f'https://www.telescope.org/weathergen/weather-icon.php?time={unix_end_time}')
 
-                unix_start_time = datetime.timestamp(start_time)
-                unix_end_time = datetime.timestamp(end_time)
-                weather_start = s.get(f'https://www.telescope.org/weathergen/weather-icon.php?time={unix_start_time}')
-                weather_end   = s.get(f'https://www.telescope.org/weathergen/weather-icon.php?time={unix_end_time}')
-
-                weather_start = telescope_org_weather(weather_start, weather_status)
-                weather_end   = telescope_org_weather(weather_end, weather_status)
-
+                    weather_start = telescope_org_weather(weather_start, weather_status)
+                    weather_end   = telescope_org_weather(weather_end, weather_status)
             else:
                 url = s.get(f'https://exofop.ipac.caltech.edu/tess/target.php?id={adjust_name(item)}&json')
                 text = url.text
@@ -398,10 +397,10 @@ def print_obslog(obsdate, obsdate_weather, comment, ip):
         else:
             print(f'Focus: {focus} {focus_log}')
         if not args.bypass:
-            if obsdate_weather == " ":
-                print(f'Weather: {obsdate_weather} ({weather_start} -> {weather_end} /from telescope.org)')
-            else:
+            if len(obsdate_weather) == 0:
                 print(f'Weather: {weather_start} -> {weather_end}')
+            else:
+                print(f'Weather: {obsdate_weather}')
         print(f'Humidity: {max_humidity} {min_humidity}')
         if not args.bypass:
             print(f'Comments: {comment}')

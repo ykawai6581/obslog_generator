@@ -91,11 +91,11 @@ def shorten_url(url, url_shortener):
     try:
         url = url_shortener.tinyurl.short(url)
     except requests.exceptions.ReadTimeout:
-        url = "Generation failed. Please try again"
+        url = url
     except urllib3.exceptions.ReadTimeoutError:
-        url = "Generation failed. Please try again"
+        url = url
     except pyshorteners.exceptions.ShorteningErrorException:
-        url = "Generation failed. Please try again"
+        url = url
     return url
 
 #returns the observation date according to input

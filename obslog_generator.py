@@ -1,4 +1,5 @@
 import argparse
+from astropy.time import Time
 import csv
 from datetime import datetime, timedelta
 import getpass
@@ -7,7 +8,7 @@ import json
 import numpy as np
 import os
 import pandas as pd
-from past_observation_crawler import find_obsdates, find_weather_and_comments
+from past_observation_crawler import find_obsdates, find_weather_and_comments, adjust_name, deg_to_dms, deg_to_hms
 import pyshorteners
 import requests
 import sys
@@ -114,17 +115,6 @@ def round_jd(jd):
 def unique(sequence):
     seen = set()
     return [x for x in sequence if not (x in seen or seen.add(x))]
-
-def adjust_name(str:str):
-    str = str.lower()
-    if 'toi0' in str:
-        str = str.replace('toi0', 'toi')
-    if '.01' in str:
-        str = str.replace('.01', '')
-    if '.1' in str:
-        str = str.replace('.1', '')
-    str = str.replace('-','')
-    return str
 
 def take_exposure_log(obslog, exptimes_list, exp_change_time_all_ccd, jd):
     exptimes_mask = obslog.duplicated(subset=4)
@@ -278,24 +268,36 @@ def print_obslog(obsdate, obsdate_weather, comment, ip):
                 (exp_df.iloc[0][ag]) = f'[{exp_df.iloc[0][0]}]'
             exp_df = ', '.join((exp_df.iloc[0]))
 
-        if not args.bypass:
-            with requests.Session() as s:
-                r = s.get(humidity_path)
-                humidity = r.text#.encode('utf-8')
-                humidity_reader = csv.reader(io.StringIO(humidity), delimiter=',',quotechar='"',
-                                quoting=csv.QUOTE_ALL, skipinitialspace=True)
-                humidity_df = pd.DataFrame([row for row in humidity_reader])
-                try:
-                    humidity_df[1] = humidity_df[1].astype(float)
-                    max_humidity = f'{np.round(humidity_df[1].max(),decimals=1)}% (max),'
-                    min_humidity = f'{np.round(humidity_df[1].min(),decimals=1)}% (min)'
-                except KeyError:
-                    max_humidity = "Observation too short for archival data"
-                    min_humidity = ""
+        with requests.Session() as s:
+            r = s.get(humidity_path)
+            humidity = r.text#.encode('utf-8')
+            humidity_reader = csv.reader(io.StringIO(humidity), delimiter=',',quotechar='"',
+                            quoting=csv.QUOTE_ALL, skipinitialspace=True)
+            humidity_df = pd.DataFrame([row for row in humidity_reader])
+            try:
+                humidity_df[1] = humidity_df[1].astype(float)
+                max_humidity = f'{np.round(humidity_df[1].max(),decimals=1)}% (max),'
+                min_humidity = f'{np.round(humidity_df[1].min(),decimals=1)}% (min)'
+            except KeyError:
+                max_humidity = "Observation too short for archival data"
+                min_humidity = ""
+            url_shortener = pyshorteners.Shortener()
+            humidity_plot = url_shortener.tinyurl.short(humidity_plot)
 
-                url_shortener = pyshorteners.Shortener()
+            if not args.bypass:
                 altitude_plot = url_shortener.tinyurl.short(altitude_plot)
-                humidity_plot = url_shortener.tinyurl.short(humidity_plot)
+            else:
+                url = s.get(f'https://exofop.ipac.caltech.edu/tess/target.php?id={adjust_name(item)}&json')
+                text = url.text
+                res = json.loads(text)["coordinates"]
+
+                ra = float(res["ra"])
+                ra = deg_to_hms(ra)
+                dec = float(res["dec"])
+                dec = deg_to_dms(dec)
+                jd = Time(start_time.strftime('%Y-%m-%d %T'),format='iso',out_subfmt='date_hm').jd
+                warning = " (THE GREEN SECTION INDICATES OBSERVATION TIME NOT TRANSIT TIME)"
+                altitude_plot = f'https://astro.swarthmore.edu/telescope/tess-secure/plot_airmass.cgi?observatory_string=28.3%3B-16.5097%3BAtlantic%2FCanary%3BMuSCAT2%201.52m%20at%20Teide%20Observatory%3BMuSCAT2%201.52m&observatory_latitude=28.3&observatory_longitude=-16.5097&target={item}{warning}&ra={ra}&dec={dec}&timezone=Atlantic/Canary&jd={jd}&jd_start={obslog[2][0]}&jd_end={obslog[2].iloc[-1]}&use_utc=0&max_airmass=2.4'
 
         #print output
         print('_________________________________________________')
@@ -309,10 +311,11 @@ def print_obslog(obsdate, obsdate_weather, comment, ip):
             print(f'Focus: {focus} {focus_log}')
         if not args.bypass:
             print(f'Weather: {obsdate_weather}')
-            print(f'Humidity: {max_humidity} {min_humidity}')
+        print(f'Humidity: {max_humidity} {min_humidity}')
+        if not args.bypass:
             print(f'Comments: {comment}\n')
-            print(f'Altitude plot: {altitude_plot}')
-            print(f'Humidity plot: {humidity_plot}')
+        print(f'Altitude plot: {altitude_plot}')
+        print(f'Humidity plot: {humidity_plot}')
             #time.sleep(2)
             
     print('_________________________________________________')

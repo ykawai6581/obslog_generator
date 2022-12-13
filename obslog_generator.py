@@ -48,7 +48,7 @@ if not args.bypass:
         with open(credentials, 'r') as openfile:
             payload = json.load(openfile)
     except FileNotFoundError:
-        print('_____MuSCAT2_wiki_login__________________________\n')
+        print('\n_____MuSCAT2_wiki_login__________________________\n')
         print("***you can also provide a cred.json file to bypass login***\n")
         username = input('username: ')
         password = getpass.getpass(prompt='password: ')

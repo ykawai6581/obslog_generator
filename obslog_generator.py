@@ -20,6 +20,7 @@ try:
     import tqdm
 except ModuleNotFoundError:
     print("Some required modules are not installed.\n pip install -r requirements.txt\n Please run the above command and try again.")
+    sys.exit(1)
 
 parser = argparse.ArgumentParser(description=\
 '## obslog formatter ver. 2022 Nov. 19 ##')

@@ -1,18 +1,13 @@
 #import csv
 from datetime import datetime, timedelta
 import json
+import numpy as np
 import os
 #import pandas as pd
+import requests
 import sys
 import warnings
-
-try:
-    from astropy.time import Time
-    import numpy as np
-    import requests
-except ModuleNotFoundError:
-    print("Some required modules are not installed.\n pip install -r requirements.txt\n Please run the above command and try again.")
-
+from astropy.time import Time
 
 warnings.filterwarnings("ignore")
 

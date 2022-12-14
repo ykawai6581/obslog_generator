@@ -1,4 +1,6 @@
 # [MuSCAT2] obslog_generator
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 obslog generation/registration tool for MuSCAT2
 
 ![demo](/img/obslog_generator_demo.gif)

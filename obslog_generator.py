@@ -355,8 +355,10 @@ def print_obslog(obsdate, obsdate_weather, comment, ip):
                     min_humidity = ""
                 humidity_plot = shorten_url(humidity_plot, url_shortener)
             except requests.exceptions.ConnectionError:
+                max_humidity = "Bad connection with Stella"
+                min_humidity = ""
                 humidity_plot = "Bad connection with Stella"
-                
+
             if not args.bypass:
                 altitude_plot = shorten_url(altitude_plot, url_shortener)
                 try:

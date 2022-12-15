@@ -339,6 +339,7 @@ def print_obslog(obsdate, obsdate_weather, comment, ip):
         humidity_plot = f'http://stella-archive.aip.de/stella/status/getdetail{humidity_path[54:]}'
 
         with requests.Session() as s:
+            url_shortener = pyshorteners.Shortener()
             try:
                 r = s.get(humidity_path)
                 humidity = r.text#.encode('utf-8')
@@ -352,11 +353,10 @@ def print_obslog(obsdate, obsdate_weather, comment, ip):
                 except KeyError:
                     max_humidity = "Observation too short for archival data"
                     min_humidity = ""
-                url_shortener = pyshorteners.Shortener()
                 humidity_plot = shorten_url(humidity_plot, url_shortener)
             except requests.exceptions.ConnectionError:
                 humidity_plot = "Bad connection with Stella"
-
+                
             if not args.bypass:
                 altitude_plot = shorten_url(altitude_plot, url_shortener)
                 try:

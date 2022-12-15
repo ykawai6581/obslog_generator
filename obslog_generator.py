@@ -289,9 +289,6 @@ def print_obslog(obsdate, obsdate_weather, comment, ip):
         if past_midnight(int(obslog[3].iloc[-1][0:5][:2])):
             end_time += timedelta(days=1)
 
-        humidity_path = f'http://stella-archive.aip.de/stella/status/detail-text.php?typ=2&from={start_time.strftime("%d.%m.%Y %T")}&until={end_time.strftime("%d.%m.%Y %T")}&onescale=0&minmax=0'
-        humidity_plot = f'http://stella-archive.aip.de/stella/status/getdetail{humidity_path[54:]}'
-
         exptimes_list = [] #list of tuples containing (exptime, change_time) for all exposures
         exp_change_time_all_ccd = [] # cumulative list of all ccds of times when exposure time has changed
 
@@ -342,46 +339,56 @@ def print_obslog(obsdate, obsdate_weather, comment, ip):
         humidity_plot = f'http://stella-archive.aip.de/stella/status/getdetail{humidity_path[54:]}'
 
         with requests.Session() as s:
-            r = s.get(humidity_path)
-            humidity = r.text#.encode('utf-8')
-            humidity_reader = csv.reader(io.StringIO(humidity), delimiter=',',quotechar='"',
-                            quoting=csv.QUOTE_ALL, skipinitialspace=True)
-            humidity_df = pd.DataFrame([row for row in humidity_reader])
             try:
-                humidity_df[1] = humidity_df[1].astype(float)
-                max_humidity = f'{np.round(humidity_df[1].max(),decimals=1)}% (max),'
-                min_humidity = f'{np.round(humidity_df[1].min(),decimals=1)}% (min)'
-            except KeyError:
-                max_humidity = "Observation too short for archival data"
-                min_humidity = ""
-            url_shortener = pyshorteners.Shortener()
-            humidity_plot = shorten_url(humidity_plot, url_shortener)
+                r = s.get(humidity_path)
+                humidity = r.text#.encode('utf-8')
+                humidity_reader = csv.reader(io.StringIO(humidity), delimiter=',',quotechar='"',
+                                quoting=csv.QUOTE_ALL, skipinitialspace=True)
+                humidity_df = pd.DataFrame([row for row in humidity_reader])
+                try:
+                    humidity_df[1] = humidity_df[1].astype(float)
+                    max_humidity = f'{np.round(humidity_df[1].max(),decimals=1)}% (max),'
+                    min_humidity = f'{np.round(humidity_df[1].min(),decimals=1)}% (min)'
+                except KeyError:
+                    max_humidity = "Observation too short for archival data"
+                    min_humidity = ""
+                url_shortener = pyshorteners.Shortener()
+                humidity_plot = shorten_url(humidity_plot, url_shortener)
+            except requests.exceptions.ConnectionError:
+                humidity_plot = "Bad connection with Stella"
 
             if not args.bypass:
                 altitude_plot = shorten_url(altitude_plot, url_shortener)
-                if len(obsdate_weather) == 0:
-                    unix_start_time = datetime.timestamp(start_time)
-                    unix_end_time = datetime.timestamp(end_time)
-                    weather_start = s.get(f'https://www.telescope.org/weathergen/weather-icon.php?time={unix_start_time}')
-                    weather_end   = s.get(f'https://www.telescope.org/weathergen/weather-icon.php?time={unix_end_time}')
-
-                    weather_start = telescope_org_weather(weather_start, weather_status)
-                    weather_end   = telescope_org_weather(weather_end, weather_status)
-            else:
-                url = s.get(f'https://exofop.ipac.caltech.edu/tess/target.php?id={adjust_name(item)}&json')
-                text = url.text
                 try:
-                    res = json.loads(text)["coordinates"]
-                    ra = float(res["ra"])
-                    ra = deg_to_hms(ra)
-                    dec = float(res["dec"])
-                    dec = deg_to_dms(dec)
-                    jd = Time(start_time.strftime('%Y-%m-%d %T'),format='iso',out_subfmt='date_hm').jd
-                    warning = " (THE GREEN SECTION INDICATES OBSERVATION TIME NOT TRANSIT TIME)"
-                    altitude_plot = f'https://astro.swarthmore.edu/telescope/tess-secure/plot_airmass.cgi?observatory_string=28.3%3B-16.5097%3BAtlantic%2FCanary%3BMuSCAT2%201.52m%20at%20Teide%20Observatory%3BMuSCAT2%201.52m&observatory_latitude=28.3&observatory_longitude=-16.5097&target={item}{warning}&ra={ra}&dec={dec}&timezone=Atlantic/Canary&jd={jd}&jd_start={obslog[2][0]}&jd_end={obslog[2].iloc[-1]}&use_utc=0&max_airmass=2.4'
-                    altitude_plot = shorten_url(altitude_plot, url_shortener)
-                except json.decoder.JSONDecodeError:
-                    altitude_plot = "No altitude plot found"
+                    if len(obsdate_weather) == 0:
+                        unix_start_time = datetime.timestamp(start_time)
+                        unix_end_time = datetime.timestamp(end_time)
+                        weather_start = s.get(f'https://www.telescope.org/weathergen/weather-icon.php?time={unix_start_time}')
+                        weather_end   = s.get(f'https://www.telescope.org/weathergen/weather-icon.php?time={unix_end_time}')
+
+                        weather_start = telescope_org_weather(weather_start, weather_status)
+                        weather_end   = telescope_org_weather(weather_end, weather_status)
+                except requests.exceptions.ConnectionError:
+                    weather_start = "No record"
+                    weather_end = "No record"
+            else:
+                try:
+                    url = s.get(f'https://exofop.ipac.caltech.edu/tess/target.php?id={adjust_name(item)}&json')
+                    text = url.text
+                    try:
+                        res = json.loads(text)["coordinates"]
+                        ra = float(res["ra"])
+                        ra = deg_to_hms(ra)
+                        dec = float(res["dec"])
+                        dec = deg_to_dms(dec)
+                        jd = Time(start_time.strftime('%Y-%m-%d %T'),format='iso',out_subfmt='date_hm').jd
+                        warning = " (THE GREEN SECTION INDICATES OBSERVATION TIME NOT TRANSIT TIME)"
+                        altitude_plot = f'https://astro.swarthmore.edu/telescope/tess-secure/plot_airmass.cgi?observatory_string=28.3%3B-16.5097%3BAtlantic%2FCanary%3BMuSCAT2%201.52m%20at%20Teide%20Observatory%3BMuSCAT2%201.52m&observatory_latitude=28.3&observatory_longitude=-16.5097&target={item}{warning}&ra={ra}&dec={dec}&timezone=Atlantic/Canary&jd={jd}&jd_start={obslog[2][0]}&jd_end={obslog[2].iloc[-1]}&use_utc=0&max_airmass=2.4'
+                        altitude_plot = shorten_url(altitude_plot, url_shortener)
+                    except json.decoder.JSONDecodeError:
+                        altitude_plot = "No altitude plot found"
+                except requests.exceptions.ConnectionError:
+                    altitude_plot = "Bad connection with Exofop"
 
         #print output
         print('_________________________________________________')

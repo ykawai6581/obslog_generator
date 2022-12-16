@@ -113,9 +113,8 @@ def find_obsdates(target, observations_df, targets_df):
             comments = ["" for x in dl_index]
     return obsdates, weather, comments
 
-def find_weather_and_comments(target, observations_df, targets_df, obsdate, start_time, end_time, jd_start, jd_end, payload):
+def find_weather_and_comments(target, observations_df, targets_df, obsdate, start_time, end_time, jd_start, jd_end, payload, edit):
     observations_df = replace_header(observations_df)
-    print(observations_df['start_time'])
     targets_df = replace_header(targets_df)
     targets_df['wiki_name'] = targets_df['name']
     targets_df['name'] = [adjust_name(s) for s in targets_df['name']]
@@ -135,9 +134,99 @@ def find_weather_and_comments(target, observations_df, targets_df, obsdate, star
     obsdates = list(past_observation['start_time'])
     past_observation['start_time'] = [adjust_date(x) for x in obsdates]
     try:
-        weather = past_observation[past_observation['start_time'] == obsdate]['weather'].iloc[0]
-        comments = past_observation[past_observation['start_time'] == obsdate]['comments'].iloc[0]
+        if not edit:#edit_mode:
+            weather = past_observation[past_observation['start_time'] == obsdate]['weather'].iloc[0]
+            comments = past_observation[past_observation['start_time'] == obsdate]['comments'].iloc[0]
+        else:
+            print('\n____EDIT OBSERVATION_____________________________\n')
+            choice = input(f'Edit {target}\'s observation on {date_for_view} on wiki [y/N]: ').lower()
+            print('_________________________________________________\n')
+            if choice in ['y', 'ye', 'yes']:
+                print('____What would you like to edit? ')
+                print('    ** separate with "," if multiple_____________\n')
+                print('_________________________________________________\n')
+                edit_section = input('[0:start time|1:end time|2:weather|3:comments|4:observer]: ')
+                edit_section = edit_section.split(",")
+                edit_section = [int(num) for num in edit_section]
+                obs_id = past_observation[past_observation['start_time'] == obsdate]['id'].iloc[0]
+                weather = past_observation[past_observation['start_time'] == obsdate]['weather'].iloc[0]
+                comments = past_observation[past_observation['start_time'] == obsdate]['comments'].iloc[0]
+                obsdata = {
+                            'star_id': star_id,
+                            'start_time[year]'  : datetime.strptime(past_observation['start_time'],'%x, %I:%M %p').year,
+                            'start_time[month]' : datetime.strptime(past_observation['start_time'],'%x, %I:%M %p').month,
+                            'start_time[day]'   : datetime.strptime(past_observation['start_time'],'%x, %I:%M %p').day,
+                            'start_time[hour]'  : datetime.strptime(past_observation['start_time'],'%x, %I:%M %p').hour,
+                            'start_time[minute]': datetime.strptime(past_observation['start_time'],'%x, %I:%M %p').minute,
+                            'end_time[year]'    : datetime.strptime(past_observation['end_time'],'%x, %I:%M %p').year,
+                            'end_time[month]'   : datetime.strptime(past_observation['end_time'],'%x, %I:%M %p').month,
+                            'end_time[day]'     : datetime.strptime(past_observation['end_time'],'%x, %I:%M %p').day,
+                            'end_time[hour]'    : datetime.strptime(past_observation['end_time'],'%x, %I:%M %p').hour,
+                            'end_time[minute]'  : datetime.strptime(past_observation['end_time'],'%x, %I:%M %p').minute,
+                            'telescope'         : 'MuSCAT2',
+                            'observer'          : weather,
+                            'weather'           : comments,
+                            'seeing'            : "",
+                            'exposure_time'     : "",
+                            'bias'              :1,
+                            'flats'             :1,
+                            'lightcurve'        :1,
+                            'quicklook'         :1,
+                            'comments'          : past_observation['comments'],
+                        }
+                    
+                for i in edit_section:
+                    if i == 0:
+                        print('\n____EDITING START TIME___________________________')
+                        start_year   = input('Year   [press enter if unchanged]: ')
+                        start_month  = input('Month  [press enter if unchanged]: ')
+                        start_day    = input('Day    [press enter if unchanged]: ')
+                        start_hour   = input('Hour   [press enter if unchanged]: ')
+                        start_minute = input('Minute [press enter if unchanged]: ')
 
+                        obsdata['start_time[year]']   = obsdata['start_time[year]'] if start_year == "" else start_year
+                        obsdata['start_time[month]']  = obsdata['start_time[month]'] if start_month == "" else start_month
+                        obsdata['start_time[day]']    = obsdata['start_time[day]'] if start_day == "" else start_day
+                        obsdata['start_time[hour]']   = obsdata['start_time[hour]'] if start_hour == "" else start_hour
+                        obsdata['start_time[minute]'] = obsdata['start_time[minute]'] if start_minute == "" else start_minute
+                        print('_________________________________________________\n')
+
+                    if i == 1:
+                        print('\n____EDITING END TIME_____________________________')
+                        end_year   = input('Year   [press enter if unchanged]: ')
+                        end_month  = input('Month  [press enter if unchanged]: ')
+                        end_day    = input('Day    [press enter if unchanged]: ')
+                        end_hour   = input('Hour   [press enter if unchanged]: ')
+                        end_minute = input('Minute [press enter if unchanged]: ')
+
+                        obsdata['end_time[year]']   = obsdata['end_time[year]'] if end_year == "" else end_year
+                        obsdata['end_time[month]']  = obsdata['end_time[month]'] if end_month == "" else end_month
+                        obsdata['end_time[day]']    = obsdata['end_time[day]'] if end_day == "" else end_day
+                        obsdata['end_time[hour]']   = obsdata['end_time[hour]'] if end_hour == "" else end_hour
+                        obsdata['endend_time[minute]'] = obsdata['end_time[minute]'] if end_minute == "" else end_minute
+                        print('_________________________________________________\n')
+
+                    if i == 2:
+                        weather = input('Weather: ')
+                        obsdata['weather'] = weather
+
+                    if i == 3:
+                        comments = input('Comments: ')
+                        obsdata['comments'] = comments
+                with requests.Session() as s:
+                    print('_________________________________________________\n')
+                    print('Updating... (takes about 10-15 seconds)')
+                    print('_________________________________________________')
+                    p = s.post('http://research.iac.es/proyecto/muscat/users/login', data=payload)
+                    registration = s.post(f'http://research.iac.es/proyecto/muscat/observations/edit/{obs_id}', data=obsdata)
+                    if registration.status_code == 404:
+                        print(f'Update failed. Please check your word count in comments. ({target}, {date_for_view})')
+                    else:
+                        print(f'\Update complete! ({target}, {date_for_view})\n')
+                        print(f'Check at http://research.iac.es/proyecto/muscat/observations/edit/{obs_id}\n')
+            else:
+                weather = past_observation[past_observation['start_time'] == obsdate]['weather'].iloc[0]
+                comments = past_observation[past_observation['start_time'] == obsdate]['comments'].iloc[0]
     except IndexError:
         #ここでtarget観測を登録するか聞く（各天体についてのループの中でここに辿り着いてるから、ここでinputを促せばそのまま登録できる？）
         date_for_view = datetime(obs(obsdate)['year'],obs(obsdate)['month'],obs(obsdate)['day']).strftime('%B %d, %Y')

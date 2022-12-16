@@ -28,6 +28,7 @@ parser = argparse.ArgumentParser(description=\
 '## obslog formatter ver. 2022 Nov. 19 ##')
 
 parser.add_argument('--obsdate', type=int, help='observation date in yymmdd format')
+parser.add_argument('--edit', help='if provided, script enters edit mode to edit past observations.', action='store_true')
 parser.add_argument('--jd', help='if provided, timestamps will be given in jd instead of ut', action='store_true')
 parser.add_argument('--bypass', help='if provided, data download from wiki is bypassed. may be useful for checking tonight\'s obslog', action='store_true')
 parser.add_argument('--obj', type=str, help='if given, only the log for that object will be returned. \
@@ -297,7 +298,7 @@ def print_obslog(obsdate, obsdate_weather, comment, ip):
         ag = None #create empty variable which can be overwritten in when generating obslog for emails and registeration to wiki
 
         if not args.bypass: #if a specific date is returned and connected to wiki, obtain info from wiki
-            obsdate_weather, comment , focus , ag, altitude_plot = find_weather_and_comments(item,observations_df,targets_df,obsdate,start_time,end_time,obslog[2][0],obslog[2].iloc[-1],payload)
+            obsdate_weather, comment , focus , ag, altitude_plot = find_weather_and_comments(item,observations_df,targets_df,obsdate,start_time,end_time,obslog[2][0],obslog[2].iloc[-1],payload, args.edit)
         #args.obsdate is not None and 
         for ccd in ccds:
             df = pd.DataFrame(ccd)

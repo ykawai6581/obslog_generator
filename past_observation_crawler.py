@@ -115,6 +115,7 @@ def find_obsdates(target, observations_df, targets_df):
 
 def find_weather_and_comments(target, observations_df, targets_df, obsdate, start_time, end_time, jd_start, jd_end, payload):
     observations_df = replace_header(observations_df)
+    print(observations_df)
     targets_df = replace_header(targets_df)
     targets_df['wiki_name'] = targets_df['name']
     targets_df['name'] = [adjust_name(s) for s in targets_df['name']]

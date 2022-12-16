@@ -67,6 +67,17 @@ def deg_to_hms(deg):
     s = np.round((((deg/15 - d) * 60) - m) * 60, decimals=2)
     return f'{d}:{np.abs(m)}:{np.abs(s)}'
 
+def exp_time_str(df,ag):
+    l_list = []
+    for i in range(len(df)):
+        (df.iloc[i][int(ag)]) = f'[{df.iloc[i][0]}]'
+        l = [str(t) for t in df.iloc[i]]
+        l = ', '.join((l))
+        l_list.append(l)
+
+    l_list = ' -> '.join((l_list))
+    return l_list
+
 def find_obsdates(target, observations_df, targets_df):
     observations_df = replace_header(observations_df)
     targets_df = replace_header(targets_df)
@@ -218,11 +229,13 @@ def find_weather_and_comments(target, observations_df, targets_df, obsdate, star
 
                         if i == 3:
                             comments = input('Comments: ')
-                            obsdata['comments'] = comments
-
+                            ag = input('CCD for ag [0|1|2|3]: ')
+                            l_list = exp_time_str(exp_df,ag)
+                            obsdata['comments'] = f'{l_list}.{comments}'
                         if i == 4:
                             observer = input('Observer: ')
                             obsdata['observer'] = observer
+                            
                     with requests.Session() as s:
                         print('_________________________________________________\n')
                         print('Updating... (takes about 10-15 seconds)')
@@ -255,14 +268,7 @@ def find_weather_and_comments(target, observations_df, targets_df, obsdate, star
                     except ValueError:
                         focus = focus_index
 
-                    l_list = []
-                    for i in range(len(exp_df)):
-                        (exp_df.iloc[i][int(ag)]) = f'[{exp_df.iloc[i][0]}]'
-                        l = [str(t) for t in exp_df.iloc[i]]
-                        l = ', '.join((l))
-                        l_list.append(l)
-
-                    l_list = ' -> '.join((l_list))
+                    l_list = exp_time_str(exp_df,ag)
 
                     comments = input('Comments: ')
                     observers = input('Observers: ')

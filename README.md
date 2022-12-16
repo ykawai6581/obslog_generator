@@ -125,7 +125,32 @@ this will search the MuSCAT2 wiki for all observations previously conducted for 
 	
 you can either download obslog for all observations or choose a specific date.
 
-### 3: generate simplified obslog
+### 3: edit previously registered obslogs
+	
+	python obslog_generator.py --obsdate=221215 --edit
+
+if you made any mistakes entering information on the obslog, you can enter the edit mode and follow simple command prompts to edit the observation.
+
+	____EDIT OBSERVATION_____________________________
+
+	Edit TOI05109.01's observation on December 15, 2022 on wiki [y/N]: y
+
+	____What would you like to edit?_________________
+
+	***separate with "," if multiple***
+
+	Options [0:start time|1:end time|2:weather|3:comments|4:observer]: 2
+	Weather: Clear
+	_________________________________________________
+
+	Updating... (takes about 10-15 seconds)
+	_________________________________________________
+
+	Update complete! (TOI05109.01, December 15, 2022)
+
+	Check at http://research.iac.es/proyecto/muscat/observations/view/2317 
+
+### 4: generate simplified obslog
 
 	python obslog_generator.py --obsdate=221211 --bypass
 
@@ -155,6 +180,9 @@ this is much quicker because login to MuSCAT2 wiki is bypassed, which can be slo
 
   --bypass 		  : if provided, data download from wiki is bypassed. may be useful for 
 			    quickly checking obslog during observation
+
+  --edit		  : if provide, the script will enter edit mode, where you can edit 
+			    observation logs on wiki
 
 ### notes:
 metadata (obj_name, obstime, exp, focus) are taken from obslog, weather and comments are taken from MuSCAT2 wiki.<br/>

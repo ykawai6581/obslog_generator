@@ -142,8 +142,8 @@ def find_weather_and_comments(target, observations_df, targets_df, obsdate, star
             choice = input(f'Edit {target}\'s observation on {date_for_view} on wiki [y/N]: ').lower()
             print('_________________________________________________\n')
             if choice in ['y', 'ye', 'yes']:
-                print('____What would you like to edit?')
-                print('    separate with "," if multiple________________\n')
+                print('____What would you like to edit?_________________')
+                print('\n    separate with "," if multiple\n')
                 edit_section = input('[0:start time|1:end time|2:weather|3:comments|4:observer]: ')
                 edit_section = edit_section.split(",")
                 edit_section = [int(num) for num in edit_section]
@@ -179,7 +179,7 @@ def find_weather_and_comments(target, observations_df, targets_df, obsdate, star
 
                 for i in edit_section:
                     if i == 0:
-                        print('\n____EDITING START TIME___________________________')
+                        print('\n____EDITING START TIME___________________________\n')
                         e_start_year   = input('Year   [press enter if unchanged]: ')
                         e_start_month  = input('Month  [press enter if unchanged]: ')
                         e_start_day    = input('Day    [press enter if unchanged]: ')
@@ -191,10 +191,10 @@ def find_weather_and_comments(target, observations_df, targets_df, obsdate, star
                         obsdata['start_time[day]']    = obsdata['start_time[day]'] if e_start_day == "" else e_start_day
                         obsdata['start_time[hour]']   = obsdata['start_time[hour]'] if e_start_hour == "" else e_start_hour
                         obsdata['start_time[minute]'] = obsdata['start_time[minute]'] if e_start_minute == "" else e_start_minute
-                        print('_________________________________________________\n')
+                        print('_________________________________________________')
 
                     if i == 1:
-                        print('\n____EDITING END TIME_____________________________')
+                        print('\n____EDITING END TIME_____________________________\n')
                         e_end_year   = input('Year   [press enter if unchanged]: ')
                         e_end_month  = input('Month  [press enter if unchanged]: ')
                         e_end_day    = input('Day    [press enter if unchanged]: ')
@@ -225,7 +225,7 @@ def find_weather_and_comments(target, observations_df, targets_df, obsdate, star
                         print(f'Update failed. Please check your word count in comments. ({target}, {date_for_view})')
                     else:
                         print(f'\nUpdate complete! ({target}, {date_for_view})\n')
-                        print(f'Check at http://research.iac.es/proyecto/muscat/observations/edit/{obs_id}\n')
+                        print(f'Check at http://research.iac.es/proyecto/muscat/observations/view/{obs_id}\n')
 
     except IndexError:
         #ここでtarget観測を登録するか聞く（各天体についてのループの中でここに辿り着いてるから、ここでinputを促せばそのまま登録できる？）

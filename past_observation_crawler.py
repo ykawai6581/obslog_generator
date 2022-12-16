@@ -149,8 +149,11 @@ def find_weather_and_comments(target, observations_df, targets_df, obsdate, star
                     weather = input('Weather: ')
                     ag = input('CCD for ag [0|1|2|3]: ')
                     focus_options = ["In focus,", "On focus,", "Slightly defocused,", "Defocused,", "Heavily defocused,"]
-                    focus_index = input('Focus [0:in focus|1:on focus|2:slightly defocused|3:defocused|4:heavily defocused]: ')
-                    focus = focus_options[int(focus_index)]
+                    focus_index = input('Focus [0:in focus|1:on focus|2:slightly defocused|3:defocused|4:heavily defocused|custom string]: ')
+                    try:
+                        focus = focus_options[int(focus_index)]
+                    except ValueError:
+                        focus = focus_index
                     comments = input('Comments: ')
                     observers = input('Observers: ')
                     obsdata = {

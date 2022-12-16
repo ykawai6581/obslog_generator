@@ -28,9 +28,9 @@ MuSCAT2用obslog取得/登録ツールです。
 
 ## 利用方法: 
 
-	python obslog_generator.py [-h] --obsdate=int --obj=str --jd --bypass
+	python obslog_generator.py [-h] --obsdate=int --obj=str --jd --bypass --edit
 
-上のコマンドを走らせることで、obslog_generatorを起動します。argsを指定することで、以下のような使い方ができます。
+--obsdateなど、異なるargsを指定することで、以下のような使い方ができます。
 
 ### 1: obslogを取得し、wikiに登録する (eg. 2022年12月10日)
 
@@ -93,7 +93,7 @@ wikiに未登録の天体は、以下のように登録するか聞かれます�
 	Humidity plot: https://tinyurl.com/2f2evscw
 	_________________________________________________
 
-Altitude plotとHumidity plotは、それぞれTTFとStellaから取得しており、リンクから確認できます。
+Altitude plotとHumidity plotは、それぞれTTFとStellaから取得しており、リンクから確認できます。（スゴイ！）
 
 ![altitude and humidity plots](/img/sample_altitude_humidity_plots.png)
 
@@ -106,7 +106,7 @@ Altitude plotとHumidity plotは、それぞれTTFとStellaから取得してお
 	are not necessary because it is difficult to account for the 
 	inconsistencies and query may return empty results. case insensitive.
 	
-このように天体名を指定すると、過去にwikiに登録されたその天体の全てのobslogを取得できます。
+このように天体名を指定すると、過去にwikiに登録されたその天体の全てのobslogを取得できます。（スゴイ！！）
 	_________________________________________________
 	2 observation(s) for KELT-19 are found on: (yymmdd)
 
@@ -185,6 +185,8 @@ Altitude plotとHumidity plotは、それぞれTTFとStellaから取得してお
 wikiに登録されていない場合及びbypassモードでは、telescope.orgから天気を取得しています。<br/>
 
 bypassモードではwikiにログインしないため、ExoFOPからRA, Decを取得しています。
+
+ご意見やバグなどがあれば、教えてください。
 
 ### 必要パッケージ:
 numpy,pandas,requests,tqdm,astropy,pyshorteners

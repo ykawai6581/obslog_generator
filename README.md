@@ -29,7 +29,7 @@ additionally, you can prepare your own cred.json file under /obslog_generator so
 
 ## usage: 
 
-	python obslog_generator.py [-h] --obsdate=int --obj=str --jd --bypass
+	python obslog_generator.py [-h] --obsdate=int --obj=str --jd --bypass --edit
 
 run the above command with arguments that fit your needs! below are some examples.
 
@@ -174,14 +174,14 @@ this is much quicker because login to MuSCAT2 wiki is bypassed, which can be slo
 
   --obsdate        	  : date of observation in yymmdd format
 
-  --obj			  : if given, only the log for that object will be returned
+  --obj			  : name of object to retrieve obslog
 
   --jd 			  : if provided, will return time stamps in jd instead of ut
 
   --bypass 		  : if provided, data download from wiki is bypassed. may be useful for 
 			    quickly checking obslog during observation
 
-  --edit		  : if provide, the script will enter edit mode, where you can edit 
+  --edit		  : if provided, the script will enter edit mode, where you can edit 
 			    observation logs on wiki
 
 ### notes:

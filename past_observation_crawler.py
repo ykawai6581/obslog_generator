@@ -132,10 +132,10 @@ def find_weather_and_comments(target, observations_df, targets_df, obsdate, star
     
     past_observation = observations_df[observations_df['star_id'] == star_id]
     obsdates = list(past_observation['start_time'])
-    past_observation['start_time'] = [adjust_date(x) for x in obsdates]
+    past_observation['start_time_short'] = [adjust_date(x) for x in obsdates]
     try:
-        weather = past_observation[past_observation['start_time'] == obsdate]['weather'].iloc[0]
-        comments = past_observation[past_observation['start_time'] == obsdate]['comments'].iloc[0]
+        weather = past_observation[past_observation['start_time_short'] == obsdate]['weather'].iloc[0]
+        comments = past_observation[past_observation['start_time_short'] == obsdate]['comments'].iloc[0]
         if edit:
             date_for_view = datetime(obs(obsdate)['year'],obs(obsdate)['month'],obs(obsdate)['day']).strftime('%B %d, %Y')
             print('\n____EDIT OBSERVATION_____________________________\n')
@@ -147,12 +147,12 @@ def find_weather_and_comments(target, observations_df, targets_df, obsdate, star
                 edit_section = input('[0:start time|1:end time|2:weather|3:comments|4:observer]: ')
                 edit_section = edit_section.split(",")
                 edit_section = [int(num) for num in edit_section]
-                obs_id = past_observation[past_observation['start_time'] == obsdate]['id'].iloc[0]
-                weather = past_observation[past_observation['start_time'] == obsdate]['weather'].iloc[0]
-                comments = past_observation[past_observation['start_time'] == obsdate]['comments'].iloc[0]
-                print(obsdate)
-                start_time = datetime.strptime(past_observation[past_observation['start_time'] == obsdate]['start_time'].iloc[0],'%x, %I:%M %p')
-                end_time = datetime.strptime(past_observation[past_observation['end_time'] == obsdate]['end_time'].iloc[0],'%x, %I:%M %p')
+                obs_id = past_observation[past_observation['start_time_short'] == obsdate]['id'].iloc[0]
+                weather = past_observation[past_observation['start_time_short'] == obsdate]['weather'].iloc[0]
+                comments = past_observation[past_observation['start_time_short'] == obsdate]['comments'].iloc[0]
+                print(past_observation)
+                start_time = datetime.strptime(past_observation[past_observation['id'] == obs_id]['start_time'].iloc[0],'%x, %I:%M %p')
+                end_time = datetime.strptime(past_observation[past_observation['id'] == obs_id]['end_time'].iloc[0],'%x, %I:%M %p')
                 obsdata = {
                             'star_id': star_id,
                             'start_time[year]'  : start_time.year,

@@ -214,6 +214,10 @@ def find_weather_and_comments(target, observations_df, targets_df, obsdate, star
                     if i == 3:
                         comments = input('Comments: ')
                         obsdata['comments'] = comments
+
+                    if i == 4:
+                        observer = input('Observer: ')
+                        obsdata['observer'] = observer
                 with requests.Session() as s:
                     print('_________________________________________________\n')
                     print('Updating... (takes about 10-15 seconds)')

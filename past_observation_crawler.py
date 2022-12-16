@@ -178,7 +178,7 @@ def find_weather_and_comments(target, observations_df, targets_df, obsdate, star
 
                 for i in edit_section:
                     if i == 0:
-                        caution = input('CAUTION: Editing obsdate can cause mismatch with shine obslog. Continue?: [y/N]')
+                        caution = input('CAUTION: Editing obsdate can cause mismatch with shine obslog. Continue? [y/N]: ')
                         if caution in ['y', 'ye', 'yes']:
                             print('\n____EDITING START TIME___________________________\n')
                             e_start_year   = input('Year   [press enter if unchanged]: ')
@@ -195,7 +195,7 @@ def find_weather_and_comments(target, observations_df, targets_df, obsdate, star
                             print('_________________________________________________')
 
                     if i == 1:
-                        caution = input('CAUTION: Editing obsdate can cause mismatch with shine obslog. Continue?: [y/N]')
+                        caution = input('CAUTION: Editing obsdate can cause mismatch with shine obslog. Continue? [y/N]: ')
                         if caution in ['y', 'ye', 'yes']:
                             print('\n____EDITING END TIME_____________________________\n')
                             e_end_year   = input('Year   [press enter if unchanged]: ')

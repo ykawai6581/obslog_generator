@@ -138,6 +138,7 @@ def find_weather_and_comments(target, observations_df, targets_df, obsdate, star
             weather = past_observation[past_observation['start_time'] == obsdate]['weather'].iloc[0]
             comments = past_observation[past_observation['start_time'] == obsdate]['comments'].iloc[0]
         else:
+            date_for_view = datetime(obs(obsdate)['year'],obs(obsdate)['month'],obs(obsdate)['day']).strftime('%B %d, %Y')
             print('\n____EDIT OBSERVATION_____________________________\n')
             choice = input(f'Edit {target}\'s observation on {date_for_view} on wiki [y/N]: ').lower()
             print('_________________________________________________\n')
@@ -219,7 +220,6 @@ def find_weather_and_comments(target, observations_df, targets_df, obsdate, star
                     print('_________________________________________________')
                     p = s.post('http://research.iac.es/proyecto/muscat/users/login', data=payload)
                     registration = s.post(f'http://research.iac.es/proyecto/muscat/observations/edit/{obs_id}', data=obsdata)
-                    date_for_view = datetime(obs(obsdate)['year'],obs(obsdate)['month'],obs(obsdate)['day']).strftime('%B %d, %Y')
                     if registration.status_code == 404:
                         print(f'Update failed. Please check your word count in comments. ({target}, {date_for_view})')
                     else:

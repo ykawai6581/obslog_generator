@@ -231,11 +231,12 @@ def find_weather_and_comments(target, observations_df, targets_df, obsdate, star
                             comments = input('Comments: ')
                             ag = input('CCD for ag [0|1|2|3]: ')
                             l_list = exp_time_str(exp_df,ag)
-                            obsdata['comments'] = f'{l_list}.{comments}'
+                            obsdata['comments'] = f'{l_list}. {comments}'
+                            comments = f'{l_list}. {comments}'
                         if i == 4:
                             observer = input('Observer: ')
                             obsdata['observer'] = observer
-                            
+
                     with requests.Session() as s:
                         print('_________________________________________________\n')
                         print('Updating... (takes about 10-15 seconds)')

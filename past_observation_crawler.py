@@ -134,10 +134,9 @@ def find_weather_and_comments(target, observations_df, targets_df, obsdate, star
     obsdates = list(past_observation['start_time'])
     past_observation['start_time'] = [adjust_date(x) for x in obsdates]
     try:
-        if not edit:#edit_mode:
-            weather = past_observation[past_observation['start_time'] == obsdate]['weather'].iloc[0]
-            comments = past_observation[past_observation['start_time'] == obsdate]['comments'].iloc[0]
-        else:
+        weather = past_observation[past_observation['start_time'] == obsdate]['weather'].iloc[0]
+        comments = past_observation[past_observation['start_time'] == obsdate]['comments'].iloc[0]
+        if edit:
             date_for_view = datetime(obs(obsdate)['year'],obs(obsdate)['month'],obs(obsdate)['day']).strftime('%B %d, %Y')
             print('\n____EDIT OBSERVATION_____________________________\n')
             choice = input(f'Edit {target}\'s observation on {date_for_view} on wiki [y/N]: ').lower()
@@ -225,9 +224,7 @@ def find_weather_and_comments(target, observations_df, targets_df, obsdate, star
                     else:
                         print(f'\nUpdate complete! ({target}, {date_for_view})\n')
                         print(f'Check at http://research.iac.es/proyecto/muscat/observations/edit/{obs_id}\n')
-            else:
-                weather = past_observation[past_observation['start_time'] == obsdate]['weather'].iloc[0]
-                comments = past_observation[past_observation['start_time'] == obsdate]['comments'].iloc[0]
+
     except IndexError:
         #ここでtarget観測を登録するか聞く（各天体についてのループの中でここに辿り着いてるから、ここでinputを促せばそのまま登録できる？）
         date_for_view = datetime(obs(obsdate)['year'],obs(obsdate)['month'],obs(obsdate)['day']).strftime('%B %d, %Y')

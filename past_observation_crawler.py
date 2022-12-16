@@ -151,18 +151,20 @@ def find_weather_and_comments(target, observations_df, targets_df, obsdate, star
                 obs_id = past_observation[past_observation['start_time'] == obsdate]['id'].iloc[0]
                 weather = past_observation[past_observation['start_time'] == obsdate]['weather'].iloc[0]
                 comments = past_observation[past_observation['start_time'] == obsdate]['comments'].iloc[0]
+                start_time = datetime.strptime(past_observation[past_observation['start_time'] == obsdate]['start_time'].iloc[0],'%x, %I:%M %p')
+                end_time = datetime.strptime(past_observation[past_observation['end_time'] == obsdate]['end_time'].iloc[0],'%x, %I:%M %p')
                 obsdata = {
                             'star_id': star_id,
-                            'start_time[year]'  : datetime.strptime(past_observation['start_time'],'%x, %I:%M %p').year,
-                            'start_time[month]' : datetime.strptime(past_observation['start_time'],'%x, %I:%M %p').month,
-                            'start_time[day]'   : datetime.strptime(past_observation['start_time'],'%x, %I:%M %p').day,
-                            'start_time[hour]'  : datetime.strptime(past_observation['start_time'],'%x, %I:%M %p').hour,
-                            'start_time[minute]': datetime.strptime(past_observation['start_time'],'%x, %I:%M %p').minute,
-                            'end_time[year]'    : datetime.strptime(past_observation['end_time'],'%x, %I:%M %p').year,
-                            'end_time[month]'   : datetime.strptime(past_observation['end_time'],'%x, %I:%M %p').month,
-                            'end_time[day]'     : datetime.strptime(past_observation['end_time'],'%x, %I:%M %p').day,
-                            'end_time[hour]'    : datetime.strptime(past_observation['end_time'],'%x, %I:%M %p').hour,
-                            'end_time[minute]'  : datetime.strptime(past_observation['end_time'],'%x, %I:%M %p').minute,
+                            'start_time[year]'  : start_time.year,
+                            'start_time[month]' : start_time.month,
+                            'start_time[day]'   : start_time.day,
+                            'start_time[hour]'  : start_time.hour,
+                            'start_time[minute]': start_time.minute,
+                            'end_time[year]'    : end_time.year,
+                            'end_time[month]'   : end_time.month,
+                            'end_time[day]'     : end_time.day,
+                            'end_time[hour]'    : end_time.hour,
+                            'end_time[minute]'  : end_time.minute,
                             'telescope'         : 'MuSCAT2',
                             'observer'          : weather,
                             'weather'           : comments,
@@ -178,32 +180,32 @@ def find_weather_and_comments(target, observations_df, targets_df, obsdate, star
                 for i in edit_section:
                     if i == 0:
                         print('\n____EDITING START TIME___________________________')
-                        start_year   = input('Year   [press enter if unchanged]: ')
-                        start_month  = input('Month  [press enter if unchanged]: ')
-                        start_day    = input('Day    [press enter if unchanged]: ')
-                        start_hour   = input('Hour   [press enter if unchanged]: ')
-                        start_minute = input('Minute [press enter if unchanged]: ')
+                        e_start_year   = input('Year   [press enter if unchanged]: ')
+                        e_start_month  = input('Month  [press enter if unchanged]: ')
+                        e_start_day    = input('Day    [press enter if unchanged]: ')
+                        e_start_hour   = input('Hour   [press enter if unchanged]: ')
+                        e_start_minute = input('Minute [press enter if unchanged]: ')
 
-                        obsdata['start_time[year]']   = obsdata['start_time[year]'] if start_year == "" else start_year
-                        obsdata['start_time[month]']  = obsdata['start_time[month]'] if start_month == "" else start_month
-                        obsdata['start_time[day]']    = obsdata['start_time[day]'] if start_day == "" else start_day
-                        obsdata['start_time[hour]']   = obsdata['start_time[hour]'] if start_hour == "" else start_hour
-                        obsdata['start_time[minute]'] = obsdata['start_time[minute]'] if start_minute == "" else start_minute
+                        obsdata['start_time[year]']   = obsdata['start_time[year]'] if e_start_year == "" else e_start_year
+                        obsdata['start_time[month]']  = obsdata['start_time[month]'] if e_start_month == "" else e_start_month
+                        obsdata['start_time[day]']    = obsdata['start_time[day]'] if e_start_day == "" else e_start_day
+                        obsdata['start_time[hour]']   = obsdata['start_time[hour]'] if e_start_hour == "" else e_start_hour
+                        obsdata['start_time[minute]'] = obsdata['start_time[minute]'] if e_start_minute == "" else e_start_minute
                         print('_________________________________________________\n')
 
                     if i == 1:
                         print('\n____EDITING END TIME_____________________________')
-                        end_year   = input('Year   [press enter if unchanged]: ')
-                        end_month  = input('Month  [press enter if unchanged]: ')
-                        end_day    = input('Day    [press enter if unchanged]: ')
-                        end_hour   = input('Hour   [press enter if unchanged]: ')
-                        end_minute = input('Minute [press enter if unchanged]: ')
+                        e_end_year   = input('Year   [press enter if unchanged]: ')
+                        e_end_month  = input('Month  [press enter if unchanged]: ')
+                        e_end_day    = input('Day    [press enter if unchanged]: ')
+                        e_end_hour   = input('Hour   [press enter if unchanged]: ')
+                        e_end_minute = input('Minute [press enter if unchanged]: ')
 
-                        obsdata['end_time[year]']   = obsdata['end_time[year]'] if end_year == "" else end_year
-                        obsdata['end_time[month]']  = obsdata['end_time[month]'] if end_month == "" else end_month
-                        obsdata['end_time[day]']    = obsdata['end_time[day]'] if end_day == "" else end_day
-                        obsdata['end_time[hour]']   = obsdata['end_time[hour]'] if end_hour == "" else end_hour
-                        obsdata['endend_time[minute]'] = obsdata['end_time[minute]'] if end_minute == "" else end_minute
+                        obsdata['end_time[year]']   = obsdata['end_time[year]'] if e_end_year == "" else e_end_year
+                        obsdata['end_time[month]']  = obsdata['end_time[month]'] if e_end_month == "" else e_end_month
+                        obsdata['end_time[day]']    = obsdata['end_time[day]'] if e_end_day == "" else e_end_day
+                        obsdata['end_time[hour]']   = obsdata['end_time[hour]'] if e_end_hour == "" else e_end_hour
+                        obsdata['endend_time[minute]'] = obsdata['end_time[minute]'] if e_end_minute == "" else e_end_minute
                         print('_________________________________________________\n')
 
                     if i == 2:

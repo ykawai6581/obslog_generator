@@ -260,9 +260,8 @@ def find_weather_and_comments(target, observations_df, targets_df, obsdate, star
                         l = ', '.join((l))
                         l_list.append(l)
 
-                    l_list = '-> '.join((l_list))
+                    l_list = ' -> '.join((l_list))
 
-                    print(l_list)
                     comments = input('Comments: ')
                     observers = input('Observers: ')
                     obsdata = {

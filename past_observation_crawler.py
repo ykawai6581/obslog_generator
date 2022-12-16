@@ -140,17 +140,16 @@ def find_weather_and_comments(target, observations_df, targets_df, obsdate, star
             date_for_view = datetime(obs(obsdate)['year'],obs(obsdate)['month'],obs(obsdate)['day']).strftime('%B %d, %Y')
             print('\n____EDIT OBSERVATION_____________________________\n')
             choice = input(f'Edit {target}\'s observation on {date_for_view} on wiki [y/N]: ').lower()
-            print('_________________________________________________\n')
             if choice in ['y', 'ye', 'yes']:
                 print('____What would you like to edit?_________________')
-                print('\n    separate with "," if multiple\n')
+                print('\n    ***separate with "," if multiple***\n')
                 edit_section = input('[0:start time|1:end time|2:weather|3:comments|4:observer]: ')
                 edit_section = edit_section.split(",")
                 edit_section = [int(num) for num in edit_section]
                 obs_id = past_observation[past_observation['start_time_short'] == obsdate]['id'].iloc[0]
                 weather = past_observation[past_observation['start_time_short'] == obsdate]['weather'].iloc[0]
                 comments = past_observation[past_observation['start_time_short'] == obsdate]['comments'].iloc[0]
-                print(past_observation)
+                print(past_observation[past_observation['id'] == obs_id])
                 start_time = datetime.strptime(past_observation[past_observation['id'] == obs_id]['start_time'].iloc[0],'%x, %I:%M %p')
                 end_time = datetime.strptime(past_observation[past_observation['id'] == obs_id]['end_time'].iloc[0],'%x, %I:%M %p')
                 obsdata = {

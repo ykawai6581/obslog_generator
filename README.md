@@ -137,7 +137,7 @@ if you made any mistakes entering information on the obslog, you can enter the e
 
 	____What would you like to edit?_________________
 
-	***separate with "," if multiple***
+	*** separate integers with commmas if multiple **
 
 	Options [0:start time|1:end time|2:weather|3:comments|4:observer]: 2
 	Weather: Clear

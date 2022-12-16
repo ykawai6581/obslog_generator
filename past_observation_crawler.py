@@ -178,34 +178,38 @@ def find_weather_and_comments(target, observations_df, targets_df, obsdate, star
 
                 for i in edit_section:
                     if i == 0:
-                        print('\n____EDITING START TIME___________________________\n')
-                        e_start_year   = input('Year   [press enter if unchanged]: ')
-                        e_start_month  = input('Month  [press enter if unchanged]: ')
-                        e_start_day    = input('Day    [press enter if unchanged]: ')
-                        e_start_hour   = input('Hour   [press enter if unchanged]: ')
-                        e_start_minute = input('Minute [press enter if unchanged]: ')
+                        caution = input('CAUTION: Editing obsdate can cause mismatch with shine obslog. Continue?: [y/N]')
+                        if caution in ['y', 'ye', 'yes']:
+                            print('\n____EDITING START TIME___________________________\n')
+                            e_start_year   = input('Year   [press enter if unchanged]: ')
+                            e_start_month  = input('Month  [press enter if unchanged]: ')
+                            e_start_day    = input('Day    [press enter if unchanged]: ')
+                            e_start_hour   = input('Hour   [press enter if unchanged]: ')
+                            e_start_minute = input('Minute [press enter if unchanged]: ')
 
-                        obsdata['start_time[year]']   = obsdata['start_time[year]'] if e_start_year == "" else e_start_year
-                        obsdata['start_time[month]']  = obsdata['start_time[month]'] if e_start_month == "" else e_start_month
-                        obsdata['start_time[day]']    = obsdata['start_time[day]'] if e_start_day == "" else e_start_day
-                        obsdata['start_time[hour]']   = obsdata['start_time[hour]'] if e_start_hour == "" else e_start_hour
-                        obsdata['start_time[minute]'] = obsdata['start_time[minute]'] if e_start_minute == "" else e_start_minute
-                        print('_________________________________________________')
+                            obsdata['start_time[year]']   = obsdata['start_time[year]'] if e_start_year == "" else e_start_year
+                            obsdata['start_time[month]']  = obsdata['start_time[month]'] if e_start_month == "" else e_start_month
+                            obsdata['start_time[day]']    = obsdata['start_time[day]'] if e_start_day == "" else e_start_day
+                            obsdata['start_time[hour]']   = obsdata['start_time[hour]'] if e_start_hour == "" else e_start_hour
+                            obsdata['start_time[minute]'] = obsdata['start_time[minute]'] if e_start_minute == "" else e_start_minute
+                            print('_________________________________________________')
 
                     if i == 1:
-                        print('\n____EDITING END TIME_____________________________\n')
-                        e_end_year   = input('Year   [press enter if unchanged]: ')
-                        e_end_month  = input('Month  [press enter if unchanged]: ')
-                        e_end_day    = input('Day    [press enter if unchanged]: ')
-                        e_end_hour   = input('Hour   [press enter if unchanged]: ')
-                        e_end_minute = input('Minute [press enter if unchanged]: ')
+                        caution = input('CAUTION: Editing obsdate can cause mismatch with shine obslog. Continue?: [y/N]')
+                        if caution in ['y', 'ye', 'yes']:
+                            print('\n____EDITING END TIME_____________________________\n')
+                            e_end_year   = input('Year   [press enter if unchanged]: ')
+                            e_end_month  = input('Month  [press enter if unchanged]: ')
+                            e_end_day    = input('Day    [press enter if unchanged]: ')
+                            e_end_hour   = input('Hour   [press enter if unchanged]: ')
+                            e_end_minute = input('Minute [press enter if unchanged]: ')
 
-                        obsdata['end_time[year]']   = obsdata['end_time[year]'] if e_end_year == "" else e_end_year
-                        obsdata['end_time[month]']  = obsdata['end_time[month]'] if e_end_month == "" else e_end_month
-                        obsdata['end_time[day]']    = obsdata['end_time[day]'] if e_end_day == "" else e_end_day
-                        obsdata['end_time[hour]']   = obsdata['end_time[hour]'] if e_end_hour == "" else e_end_hour
-                        obsdata['endend_time[minute]'] = obsdata['end_time[minute]'] if e_end_minute == "" else e_end_minute
-                        print('_________________________________________________\n')
+                            obsdata['end_time[year]']   = obsdata['end_time[year]'] if e_end_year == "" else e_end_year
+                            obsdata['end_time[month]']  = obsdata['end_time[month]'] if e_end_month == "" else e_end_month
+                            obsdata['end_time[day]']    = obsdata['end_time[day]'] if e_end_day == "" else e_end_day
+                            obsdata['end_time[hour]']   = obsdata['end_time[hour]'] if e_end_hour == "" else e_end_hour
+                            obsdata['endend_time[minute]'] = obsdata['end_time[minute]'] if e_end_minute == "" else e_end_minute
+                            print('_________________________________________________\n')
 
                     if i == 2:
                         weather = input('Weather: ')

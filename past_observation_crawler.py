@@ -142,7 +142,7 @@ def find_weather_and_comments(target, observations_df, targets_df, obsdate, star
             choice = input(f'Edit {target}\'s observation on {date_for_view} on wiki [y/N]: ').lower()
             if choice in ['y', 'ye', 'yes']:
                 print('\n____What would you like to edit?_________________')
-                print('\n***separate with "," if multiple***\n')
+                print('\n****separate with "," if multiple****************\n')
                 edit_section = input('Options [0:start time|1:end time|2:weather|3:comments|4:observer]: ')
                 edit_section = edit_section.split(",")
                 edit_section = [int(num) for num in edit_section]

@@ -115,7 +115,7 @@ def find_obsdates(target, observations_df, targets_df):
 
 def find_weather_and_comments(target, observations_df, targets_df, obsdate, start_time, end_time, jd_start, jd_end, payload):
     observations_df = replace_header(observations_df)
-    print(observations_df)
+    print(observations_df['start_time'])
     targets_df = replace_header(targets_df)
     targets_df['wiki_name'] = targets_df['name']
     targets_df['name'] = [adjust_name(s) for s in targets_df['name']]
@@ -137,6 +137,7 @@ def find_weather_and_comments(target, observations_df, targets_df, obsdate, star
     try:
         weather = past_observation[past_observation['start_time'] == obsdate]['weather'].iloc[0]
         comments = past_observation[past_observation['start_time'] == obsdate]['comments'].iloc[0]
+
     except IndexError:
         #ここでtarget観測を登録するか聞く（各天体についてのループの中でここに辿り着いてるから、ここでinputを促せばそのまま登録できる？）
         date_for_view = datetime(obs(obsdate)['year'],obs(obsdate)['month'],obs(obsdate)['day']).strftime('%B %d, %Y')

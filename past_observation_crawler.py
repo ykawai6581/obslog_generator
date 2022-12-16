@@ -74,7 +74,6 @@ def exp_time_str(df,ag):
         l = [str(t) for t in df.iloc[i]]
         l = ', '.join((l))
         l_list.append(l)
-
     l_list = ' -> '.join((l_list))
     return l_list
 
@@ -122,6 +121,7 @@ def find_obsdates(target, observations_df, targets_df):
             weather = ["" for x in dl_index]
         if len(comments) == 0: #accounts for obslog without comments
             comments = ["" for x in dl_index]
+
     return obsdates, weather, comments
 
 def find_weather_and_comments(target, observations_df, targets_df, obsdate, start_time, end_time, jd_start, jd_end, payload, edit, exp_df):
@@ -138,6 +138,7 @@ def find_weather_and_comments(target, observations_df, targets_df, obsdate, star
         jd = Time(start_time.strftime('%Y-%m-%d %T'),format='iso',out_subfmt='date_hm').jd
         warning = " (THE GREEN SECTION INDICATES OBSERVATION TIME NOT TRANSIT TIME)"
         altitude_plot = f'https://astro.swarthmore.edu/telescope/tess-secure/plot_airmass.cgi?observatory_string=28.3%3B-16.5097%3BAtlantic%2FCanary%3BMuSCAT2%201.52m%20at%20Teide%20Observatory%3BMuSCAT2%201.52m&observatory_latitude=28.3&observatory_longitude=-16.5097&target={target}{warning}&ra={ra}&dec={dec}&timezone=Atlantic/Canary&jd={jd}&jd_start={jd_start}&jd_end={jd_end}&use_utc=0&max_airmass=2.4'
+
     except IndexError:
         return "","Target does not seem to be registered on wiki.", "", None, "No link to altitude plot"
     
@@ -216,10 +217,10 @@ def find_weather_and_comments(target, observations_df, targets_df, obsdate, star
                                 e_end_hour   = input('Hour   [press enter if unchanged]: ')
                                 e_end_minute = input('Minute [press enter if unchanged]: ')
 
-                                obsdata['end_time[year]']   = obsdata['end_time[year]'] if e_end_year == "" else e_end_year
-                                obsdata['end_time[month]']  = obsdata['end_time[month]'] if e_end_month == "" else e_end_month
-                                obsdata['end_time[day]']    = obsdata['end_time[day]'] if e_end_day == "" else e_end_day
-                                obsdata['end_time[hour]']   = obsdata['end_time[hour]'] if e_end_hour == "" else e_end_hour
+                                obsdata['end_time[year]']      = obsdata['end_time[year]'] if e_end_year == "" else e_end_year
+                                obsdata['end_time[month]']     = obsdata['end_time[month]'] if e_end_month == "" else e_end_month
+                                obsdata['end_time[day]']       = obsdata['end_time[day]'] if e_end_day == "" else e_end_day
+                                obsdata['end_time[hour]']      = obsdata['end_time[hour]'] if e_end_hour == "" else e_end_hour
                                 obsdata['endend_time[minute]'] = obsdata['end_time[minute]'] if e_end_minute == "" else e_end_minute
                                 print('_________________________________________________\n')
 
@@ -233,6 +234,7 @@ def find_weather_and_comments(target, observations_df, targets_df, obsdate, star
                             l_list = exp_time_str(exp_df,ag)
                             obsdata['comments'] = f'{l_list}. {comments}'
                             comments = f'{l_list}. {comments}'
+
                         if i == 4:
                             observer = input('Observer: ')
                             obsdata['observer'] = observer
@@ -250,6 +252,7 @@ def find_weather_and_comments(target, observations_df, targets_df, obsdate, star
                             print(f'Check at http://research.iac.es/proyecto/muscat/observations/view/{obs_id}\n')
                 except ValueError:
                     print("\nNo edits were specified")
+
     except IndexError:
         #ここでtarget観測を登録するか聞く（各天体についてのループの中でここに辿り着いてるから、ここでinputを促せばそのまま登録できる？）
         date_for_view = datetime(obs(obsdate)['year'],obs(obsdate)['month'],obs(obsdate)['day']).strftime('%B %d, %Y')
@@ -302,16 +305,21 @@ def find_weather_and_comments(target, observations_df, targets_df, obsdate, star
                     print('_________________________________________________')
                     p = s.post('http://research.iac.es/proyecto/muscat/users/login', data=payload)
                     #print(p.status_code)
+
                     registration = s.post('http://research.iac.es/proyecto/muscat/observations/add', data=obsdata)
                     if registration.status_code == 404:
                         print(f'Registration failed. Please check your word count in comments. ({target}, {date_for_view})')
                     else:
                         print(f'\nRegistration complete! ({target}, {date_for_view})\n')
                         print(f'Check at http://research.iac.es/proyecto/muscat/stars/view/{star_id}\n')
+
                     return weather, comments, focus, int(ag), altitude_plot
+
             except requests.exceptions.ConnectionError:
                 print('Bad connection with the server. A simple retry should fix the issue. Make sure that you are connected to VPN.')
                 sys.exit(1)
+
         elif choice in ['n', 'no']:
             return "","Observation does not seem to be registered on wiki yet.","", None, altitude_plot
+
     return weather, comments, "", None, altitude_plot

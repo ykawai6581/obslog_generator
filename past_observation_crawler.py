@@ -223,7 +223,7 @@ def find_weather_and_comments(target, observations_df, targets_df, obsdate, star
                     if registration.status_code == 404:
                         print(f'Update failed. Please check your word count in comments. ({target}, {date_for_view})')
                     else:
-                        print(f'\Update complete! ({target}, {date_for_view})\n')
+                        print(f'\Update complete! ({target}, {date_for_view})')
                         print(f'Check at http://research.iac.es/proyecto/muscat/observations/edit/{obs_id}\n')
             else:
                 weather = past_observation[past_observation['start_time'] == obsdate]['weather'].iloc[0]

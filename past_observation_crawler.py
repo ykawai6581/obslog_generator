@@ -149,6 +149,7 @@ def find_weather_and_comments(target, observations_df, targets_df, obsdate, star
                 obs_id = past_observation[past_observation['start_time_short'] == obsdate]['id'].iloc[0]
                 weather = past_observation[past_observation['start_time_short'] == obsdate]['weather'].iloc[0]
                 comments = past_observation[past_observation['start_time_short'] == obsdate]['comments'].iloc[0]
+                observer = past_observation[past_observation['start_time_short'] == obsdate]['observer'].iloc[0]
                 start_time = datetime.strptime(past_observation[past_observation['id'] == obs_id]['start_time'].iloc[0],'%x, %I:%M %p')
                 end_time = datetime.strptime(past_observation[past_observation['id'] == obs_id]['end_time'].iloc[0],'%x, %I:%M %p')
                 obsdata = {
@@ -164,8 +165,8 @@ def find_weather_and_comments(target, observations_df, targets_df, obsdate, star
                             'end_time[hour]'    : end_time.hour,
                             'end_time[minute]'  : end_time.minute,
                             'telescope'         : 'MuSCAT2',
-                            'observer'          : weather,
-                            'weather'           : comments,
+                            'observer'          : observer,
+                            'weather'           : weather,
                             'seeing'            : "",
                             'exposure_time'     : "",
                             'bias'              :1,

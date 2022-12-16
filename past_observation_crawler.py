@@ -113,7 +113,7 @@ def find_obsdates(target, observations_df, targets_df):
             comments = ["" for x in dl_index]
     return obsdates, weather, comments
 
-def find_weather_and_comments(target, observations_df, targets_df, obsdate, start_time, end_time, jd_start, jd_end, payload, edit):
+def find_weather_and_comments(target, observations_df, targets_df, obsdate, start_time, end_time, jd_start, jd_end, payload, edit, exp_df):
     observations_df = replace_header(observations_df)
     targets_df = replace_header(targets_df)
     targets_df['wiki_name'] = targets_df['name']
@@ -252,6 +252,17 @@ def find_weather_and_comments(target, observations_df, targets_df, obsdate, star
                         focus = focus_options[int(focus_index)]
                     except ValueError:
                         focus = focus_index
+
+                    l_list = []
+                    for i in range(len(exp_df)):
+                        (exp_df.iloc[i][int(ag)]) = f'[{exp_df.iloc[i][0]}]'
+                        l = [str(t) for t in exp_df.iloc[i]]
+                        l = ', '.join((l))
+                        l_list.append(l)
+
+                    l_list = '-> '.join((l_list))
+
+                    print(l_list)
                     comments = input('Comments: ')
                     observers = input('Observers: ')
                     obsdata = {
@@ -275,7 +286,7 @@ def find_weather_and_comments(target, observations_df, targets_df, obsdate, star
                         'flats':1,
                         'lightcurve':1,
                         'quicklook':1,
-                        'comments': f'Ag with CCD{ag}. {comments}',
+                        'comments': f'{l_list}. {comments}',
                     }
                     #print(obsdata)
                     print('_________________________________________________\n')

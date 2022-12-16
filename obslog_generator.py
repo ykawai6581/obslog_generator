@@ -297,9 +297,6 @@ def print_obslog(obsdate, obsdate_weather, comment, ip):
         focus = "" #create empty string which can be overwritten in when generating obslog for emails and registeration to wiki
         ag = None #create empty variable which can be overwritten in when generating obslog for emails and registeration to wiki
 
-        if not args.bypass: #if a specific date is returned and connected to wiki, obtain info from wiki
-            obsdate_weather, comment , focus , ag, altitude_plot = find_weather_and_comments(item,observations_df,targets_df,obsdate,start_time,end_time,obslog[2][0],obslog[2].iloc[-1],payload, args.edit)
-        #args.obsdate is not None and 
         for ccd in ccds:
             df = pd.DataFrame(ccd)
             obslog = df[df[1] == item].reset_index()
@@ -325,6 +322,10 @@ def print_obslog(obsdate, obsdate_weather, comment, ip):
         exp_df = exp_df.fillna(method='ffill')
         if not args.jd:
             exp_df = exp_df.fillna(method='ffill').rename(index=lambda s: s.strftime('%H:%M'))
+
+        if not args.bypass: #if a specific date is returned and connected to wiki, obtain info from wiki
+            obsdate_weather, comment , focus , ag, altitude_plot = find_weather_and_comments(item,observations_df,targets_df,obsdate,start_time,end_time,obslog[2][0],obslog[2].iloc[-1],payload, args.edit,exp_df)
+
         if ag is not None: #indicates the ccd used for ag if specified
             active_ccds[active_ccds.index(ag)] = f'[{ag}]'
         exp_df.columns = active_ccds

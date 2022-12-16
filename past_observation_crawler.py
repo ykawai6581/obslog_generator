@@ -174,7 +174,7 @@ def find_weather_and_comments(target, observations_df, targets_df, obsdate, star
                             'quicklook'         :1,
                             'comments'          : past_observation['comments'],
                         }
-                    
+
                 for i in edit_section:
                     if i == 0:
                         print('\n____EDITING START TIME___________________________')
@@ -219,6 +219,7 @@ def find_weather_and_comments(target, observations_df, targets_df, obsdate, star
                     print('_________________________________________________')
                     p = s.post('http://research.iac.es/proyecto/muscat/users/login', data=payload)
                     registration = s.post(f'http://research.iac.es/proyecto/muscat/observations/edit/{obs_id}', data=obsdata)
+                    date_for_view = datetime(obs(obsdate)['year'],obs(obsdate)['month'],obs(obsdate)['day']).strftime('%B %d, %Y')
                     if registration.status_code == 404:
                         print(f'Update failed. Please check your word count in comments. ({target}, {date_for_view})')
                     else:

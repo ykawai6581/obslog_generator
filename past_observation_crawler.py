@@ -230,8 +230,8 @@ def find_weather_and_comments(target, observations_df, targets_df, obsdate, star
 
                         if i == 3:
                             comments = input('Comments: ')
-                            ag = input('CCD for ag [0|1|2|3]: ')
-                            l_list = exp_time_str(exp_df,ag)
+                            e_ag = input('CCD for ag [0|1|2|3]: ')
+                            l_list = exp_time_str(exp_df,e_ag)
                             obsdata['comments'] = f'{l_list}. {comments}'
                             comments = f'{l_list}. {comments}'
 

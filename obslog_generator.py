@@ -327,12 +327,12 @@ def print_obslog(obsdate, obsdate_weather, comment, ip):
             obsdate_weather, comment , focus , ag, altitude_plot = find_weather_and_comments(item,observations_df,targets_df,obsdate,start_time,end_time,obslog[2][0],obslog[2].iloc[-1],payload, args.edit,exp_df)
 
         if ag is not None: #indicates the ccd used for ag if specified
-            active_ccds[active_ccds.index(ag)] = f'[{ag}]'
+            active_ccds[active_ccds.index(int(ag))] = f'[{ag}]'
         exp_df.columns = active_ccds
         #if not simply write in a single line
         if len(exp_df) == 1:
             if ag is not None:
-                (exp_df.iloc[0][ag]) = f'[{exp_df.iloc[0][0]}]'
+                (exp_df.iloc[0][int(ag)]) = f'[{exp_df.iloc[0][0]}]'
             l = [str(t) for t in exp_df.iloc[0]]
             exp_df = ', '.join((l))
 

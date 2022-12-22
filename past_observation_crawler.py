@@ -130,7 +130,22 @@ def find_weather_and_comments(target, observations_df, targets_df, obsdate, star
     targets_df['wiki_name'] = targets_df['name']
     targets_df['name'] = [adjust_name(s) for s in targets_df['name']]
     try:
-        star_id = targets_df[targets_df['name'].str.contains(adjust_name(target))]['id'].iloc[0]
+        star_id = targets_df[targets_df['name'].str.contains(adjust_name(target))]#['id']#.iloc[0]
+        if len(star_id) > 1:
+            registered_names = list(star_id["wiki_name"])
+            print('\n____MULTIPLE NAMES ENCOUNTERED___________________')
+            print(f'\nMultiple names for {target} is found on wiki. Which one should we choose?\n')
+            print(f'{registered_names}')
+            list_of_names = '|'.join([f'{registered_names.index(item)}:{item}' for item in registered_names])
+            name_choice = input(f'\nOptions [{list_of_names}]: ')
+            while int(name_choice) > len(registered_names)-1:
+                    print(f'Plese give a valid index in the range 0-{len(registered_names)-1}')
+                    name_choice = input(f'Options [{list_of_names}]: ')
+            target = registered_names[int(name_choice)]
+            print(f'Continuing with {target} ...')
+            star_id = star_id['id'].iloc[int(name_choice)]
+        else:
+            star_id = star_id['id'].iloc[0]
         ra = float(targets_df[targets_df['name'].str.contains(adjust_name(target))]['RA'].iloc[0])
         ra = deg_to_hms(ra)
         dec = float(targets_df[targets_df['name'].str.contains(adjust_name(target))]['Decl'].iloc[0])

@@ -87,7 +87,7 @@ def find_obsdates(target, observations_df, targets_df):
         if len(star_id) > 1:
             registered_names = list(star_id["wiki_name"])
             print('\n____MULTIPLE NAMES ENCOUNTERED___________________')
-            print(f'\nMultiple names for {target} is found on wiki. Which one should we choose?\n')
+            print(f'\nMultiple names for {target} are found on wiki. Which one should we choose?\n')
             print(f'{registered_names}')
             list_of_names = '|'.join([f'{registered_names.index(item)}:{item}' for item in registered_names])
             name_choice = input(f'\nOptions [{list_of_names}]: ')
@@ -150,7 +150,7 @@ def find_weather_and_comments(target, observations_df, targets_df, obsdate, star
         if len(star_id) > 1:
             registered_names = list(star_id["wiki_name"])
             print('\n____MULTIPLE NAMES ENCOUNTERED___________________')
-            print(f'\nMultiple names for {target} is found on wiki. Which one should we choose?\n')
+            print(f'\nMultiple names for {target} are found on wiki. Which one should we choose?\n')
             print(f'{registered_names}')
             list_of_names = '|'.join([f'{registered_names.index(item)}:{item}' for item in registered_names])
             name_choice = input(f'\nOptions [{list_of_names}]: ')

@@ -332,7 +332,7 @@ def print_obslog(obsdate, obsdate_weather, comment, ip):
         #if not simply write in a single line
         if len(exp_df) == 1:
             if ag is not None:
-                (exp_df.iloc[0][int(ag)]) = f'[{exp_df.iloc[0][0]}]'
+                (exp_df.iloc[0][int(ag)]) = f'[{exp_df.iloc[0][int(ag)]}]'
             l = [str(t) for t in exp_df.iloc[0]]
             exp_df = ', '.join((l))
 
@@ -355,6 +355,9 @@ def print_obslog(obsdate, obsdate_weather, comment, ip):
                 except KeyError:
                     max_humidity = "Observation too short for archival data"
                     min_humidity = ""
+                except ValueError:
+                    max_humidity = "Bad connection with Stella"
+                    min_humidity = ""          
                 humidity_plot = shorten_url(humidity_plot, url_shortener)
             except requests.exceptions.ConnectionError:
                 max_humidity = "Bad connection with Stella"

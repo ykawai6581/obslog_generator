@@ -69,11 +69,14 @@ def deg_to_hms(deg):
 
 def exp_time_str(df,ag):
     l_list = []
+    print(f'ag at ccd {int(ag)}')
+    print(df)
     for i in range(len(df)):
-        (df.iloc[i][int(ag)]) = f'[{df.iloc[i][0]}]'
+        (df.iloc[i][int(ag)]) = f'[{df.iloc[i][int(ag)]}]'
         l = [str(t) for t in df.iloc[i]]
         l = ', '.join((l))
         l_list.append(l)
+    print(df)
     l_list = ' -> '.join((l_list))
     return l_list
 
@@ -343,7 +346,6 @@ def find_weather_and_comments(target, observations_df, targets_df, obsdate, star
                     else:
                         print(f'\nRegistration complete! ({target}, {date_for_view})\n')
                         print(f'Check at http://research.iac.es/proyecto/muscat/stars/view/{star_id}\n')
-
                     return weather, comments, focus, int(ag), altitude_plot
 
             except requests.exceptions.ConnectionError:

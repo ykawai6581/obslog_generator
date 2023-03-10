@@ -69,14 +69,11 @@ def deg_to_hms(deg):
 
 def exp_time_str(df,ag):
     l_list = []
-    print(f'ag at ccd {int(ag)}')
-    print(df)
     for i in range(len(df)):
         (df.iloc[i][int(ag)]) = f'[{df.iloc[i][int(ag)]}]'
         l = [str(t) for t in df.iloc[i]]
         l = ', '.join((l))
         l_list.append(l)
-    print(df)
     l_list = ' -> '.join((l_list))
     return l_list
 

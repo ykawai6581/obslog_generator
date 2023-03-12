@@ -330,7 +330,7 @@ def print_obslog(obsdate, obsdate_weather, comment, ip):
         #if not simply write in a single line
         if ag is not None:
             if len(exp_df) == 1:
-                    (exp_df.iloc[0][int(ag)]) = f'[{exp_df.iloc[0][int(ag)]}]'
+                    #(exp_df.iloc[0][int(ag)]) = f'[{exp_df.iloc[0][int(ag)]}]'
                     l = [str(t) for t in exp_df.iloc[0]]
                     exp_df = ', '.join((l))
             else:

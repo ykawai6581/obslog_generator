@@ -30,6 +30,7 @@ parser = argparse.ArgumentParser(description=\
 parser.add_argument('--obsdate', type=int, help='observation date in yymmdd format')
 parser.add_argument('--edit', help='if provided, script enters edit mode to edit past observations.', action='store_true')
 parser.add_argument('--jd', help='if provided, timestamps will be given in jd instead of ut', action='store_true')
+parser.add_argument('--details', help='if provided, print humidity and altitude', action='store_true')
 parser.add_argument('--bypass', help='if provided, data download from wiki is bypassed. may be useful for checking tonight\'s obslog', action='store_true')
 parser.add_argument('--obj', type=str, help='if given, only the log for that object will be returned. \
                                             variations of names (eg: TOI0XXXX and TOI-XXXX) are treated equally for most cases.\

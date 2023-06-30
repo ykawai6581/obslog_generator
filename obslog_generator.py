@@ -405,7 +405,7 @@ def print_obslog(obsdate, obsdate_weather, comment, ip):
         print(f'Exp: {exp_df}')
         if len(focus_log) >= 10:
             print(f'Focus: {focus}')
-            print(f'{focus_log}')
+            #print(f'{focus_log}')
         else:
             print(f'Focus: {focus} {focus_log}')
         if not args.bypass:
@@ -413,11 +413,12 @@ def print_obslog(obsdate, obsdate_weather, comment, ip):
                 print(f'Weather: {weather_start} -> {weather_end}')
             else:
                 print(f'Weather: {obsdate_weather}')
-        print(f'Humidity: {max_humidity} {min_humidity}')
         if not args.bypass:
             print(f'Comments: {comment}')
-        print(f'\nAltitude plot: {altitude_plot}')
-        print(f'Humidity plot: {humidity_plot}')
+        if args.details:
+            print(f'Humidity: {max_humidity} {min_humidity}')
+            print(f'\nAltitude plot: {altitude_plot}')
+            print(f'Humidity plot: {humidity_plot}')
             #time.sleep(2)
             
     print('_________________________________________________')
@@ -428,6 +429,7 @@ def print_obslog(obsdate, obsdate_weather, comment, ip):
         print(f'{error}\n')
     #if args.obsdate is not None:
     #    print('Please specify the CCD used for ag separately.')
+    print('Optional argument --details can be provided to print details like humidity and altitude.\n')
     print('Optional argument --jd can be provided to show times in JD.\n')
 
 for obsdate, obsdate_weather, comment in zip(obsdates, weather, comments):

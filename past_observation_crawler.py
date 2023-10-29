@@ -274,13 +274,13 @@ def find_weather_and_comments(target, observations_df, targets_df, obsdate, star
                         print('_________________________________________________\n')
                         print('Updating... (takes about 10-15 seconds)')
                         print('_________________________________________________')
-                        p = s.post('http://research.iac.es/proyecto/muscat/users/login', data=payload)
-                        registration = s.post(f'http://research.iac.es/proyecto/muscat/observations/edit/{obs_id}', data=obsdata)
+                        p = s.post('https://research.iac.es/proyecto/muscat/users/login', data=payload)
+                        registration = s.post(f'https://research.iac.es/proyecto/muscat/observations/edit/{obs_id}', data=obsdata)
                         if registration.status_code == 404:
                             print(f'Update failed. Please check your word count in comments. ({target}, {date_for_view})')
                         else:
                             print(f'\nUpdate complete! ({target}, {date_for_view})\n')
-                            print(f'Check at http://research.iac.es/proyecto/muscat/observations/view/{obs_id}\n')
+                            print(f'Check at https://research.iac.es/proyecto/muscat/observations/view/{obs_id}\n')
                 except ValueError:
                     print("\nNo edits were specified")
 
@@ -334,15 +334,15 @@ def find_weather_and_comments(target, observations_df, targets_df, obsdate, star
                     print('_________________________________________________\n')
                     print('Registering... (takes about 10-15 seconds)')
                     print('_________________________________________________')
-                    p = s.post('http://research.iac.es/proyecto/muscat/users/login', data=payload)
+                    p = s.post('https://research.iac.es/proyecto/muscat/users/login', data=payload)
                     #print(p.status_code)
 
-                    registration = s.post('http://research.iac.es/proyecto/muscat/observations/add', data=obsdata)
+                    registration = s.post('https://research.iac.es/proyecto/muscat/observations/add', data=obsdata)
                     if registration.status_code == 404:
                         print(f'Registration failed. Please check your word count in comments. ({target}, {date_for_view})')
                     else:
                         print(f'\nRegistration complete! ({target}, {date_for_view})\n')
-                        print(f'Check at http://research.iac.es/proyecto/muscat/stars/view/{star_id}\n')
+                        print(f'Check at https://research.iac.es/proyecto/muscat/stars/view/{star_id}\n')
                     return weather, comments, focus, int(ag), altitude_plot
 
             except requests.exceptions.ConnectionError:

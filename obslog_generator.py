@@ -110,15 +110,15 @@ if not args.bypass:
             print('Authenticating... (takes about 10-15 seconds)')
             print('_________________________________________________')
             time_start = time.time()
-            p = s.post('http://research.iac.es/proyecto/muscat/users/login', data=payload)
+            p = s.post('https://research.iac.es/proyecto/muscat/users/login', data=payload)
             time_end = time.time()
             elapsed = time_end - time_start
             if elapsed < 2:
                 print("\nlogin failed: wrong username/password\n")
                 sys.exit(1)
             # print the html returned or something more intelligent to see if it's a successful login page.
-            obs_path = 'http://research.iac.es/proyecto/muscat/observations/export'
-            targets_path = 'http://research.iac.es/proyecto/muscat/stars/export'
+            obs_path = 'https://research.iac.es/proyecto/muscat/observations/export'
+            targets_path = 'https://research.iac.es/proyecto/muscat/stars/export'
             path_list = [obs_path,targets_path]
             r = [s.get(path) for path in tqdm.tqdm(path_list, desc=f'Downloading past observation and registered targets data... (about 15 seconds)')]
             obs_text = r[0].text#.encode('utf-8')

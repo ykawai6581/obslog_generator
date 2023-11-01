@@ -261,10 +261,15 @@ def find_weather_and_comments(target, observations_df, targets_df, obsdate, star
 
                         if i == 3:
                             comments = input('Comments: ')
-                            e_ag = input('CCD for ag [0|1|2|3]: ')
+                            e_ag = input('CCD for ag [0|1|2|3|4:not sure]: ')
+                            focus_index = input('Focus [0:in focus|1:on focus|2:slightly defocused|3:defocused|4:heavily defocused|custom string]: ')
+                            try:
+                                focus = focus_options[int(focus_index)]
+                            except ValueError:
+                                focus = focus_index                            
                             l_list = exp_time_str(exp_df,e_ag)
-                            obsdata['comments'] = f'{l_list}. {comments}'
-                            comments = f'{l_list}. {comments}'
+                            obsdata['comments'] = f'{l_list}. {focus}. {comments}'
+                            comments = f'{l_list}. {focus}. {comments}'
 
                         if i == 4:
                             observer = input('Observer: ')
@@ -295,7 +300,7 @@ def find_weather_and_comments(target, observations_df, targets_df, obsdate, star
             try:
                 with requests.Session() as s:
                     weather = input('Weather: ')
-                    ag = input('CCD for ag [0|1|2|3]: ')
+                    ag = input('CCD for ag [0|1|2|3|4:not sure]: ')
                     focus_options = ["In focus,", "On focus,", "Slightly defocused,", "Defocused,", "Heavily defocused,"]
                     focus_index = input('Focus [0:in focus|1:on focus|2:slightly defocused|3:defocused|4:heavily defocused|custom string]: ')
                     try:
@@ -328,7 +333,7 @@ def find_weather_and_comments(target, observations_df, targets_df, obsdate, star
                         'flats':1,
                         'lightcurve':1,
                         'quicklook':1,
-                        'comments': f'{l_list}. {comments}',
+                        'comments': f'{l_list}. {focus}. {comments}',
                     }
                     #print(obsdata)
                     print('_________________________________________________\n')

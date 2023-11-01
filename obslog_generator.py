@@ -329,7 +329,8 @@ def print_obslog(obsdate, obsdate_weather, comment, ip):
 
         exp_df.columns = active_ccds
         #if not simply write in a single line
-        if ag is not None:
+        ag_known = ag is not None and ag != 4
+        if ag_known:
             if len(exp_df) == 1:
                     #(exp_df.iloc[0][int(ag)]) = f'[{exp_df.iloc[0][int(ag)]}]'
                     l = [str(t) for t in exp_df.iloc[0]]
